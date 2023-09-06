@@ -1,0 +1,429 @@
+*
+{
+    padding:0;
+    margin:0;
+    text-decoration: none;
+    list-style: none;
+    box-sizing: border-box;
+}
+.title
+{
+    display:flex;
+    justify-content: space-evenly;
+    margin:0 20px 0px 20px;
+    width:100%;
+}
+.main-page
+{
+    padding:70px 0 30px 0;
+}
+@media(max-width:775px)
+{
+    .title
+    {
+        flex-wrap: wrap;
+    }
+    .title .heading
+    {
+        margin:0 0 20px 0;
+    }
+    .title .info
+    {
+        margin:0 0 20px 0;
+    }
+}
+.title .heading
+{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.title .info
+{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+.title .heading h1
+{
+    font-size:40px;
+}
+.title .info p
+{
+    padding:0 50px;
+}
+.title .heading h1 span
+{
+    color:#159895;
+}
+.features 
+{
+    display:flex;
+    justify-content: space-between;
+    margin:20px 0 30px 0;
+}
+.features .advantages
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.features .image1
+{
+    display: flex;
+    justify-content: center;
+    align-items: center ;
+}
+.features .image1 img
+{
+    width:85%;
+    height:88%;
+}
+.features .advantages .items li
+{
+    margin-top:15%;
+}
+
+.features .advantages h3
+{
+    color: #159895;
+    font-weight: 700;
+    font-size: 27px;
+    margin-bottom:0;
+}
+.features .advantages ul li
+{
+    font-weight: 500;
+}
+.features .advantages ul li i
+{
+    padding:10px;
+    margin:0 10px 0 0;
+    color:#03362f;
+    background-color: #57C5B6;
+    border-radius:5px;
+}
+.appointment
+{
+    display:flex;
+    justify-content: space-around;
+    margin:20px 0 0 0;
+}
+.appointment .image2
+{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center ;
+}
+.appointment .image2 img
+{
+    width:75%;
+    height:95%;
+}
+.appointment .options
+{
+    width:50%;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.options h6
+{
+    color:#159895;
+    font-weight: 700;
+}
+.options h2
+{
+    padding:5px 0 10px 0;
+}
+.options .items
+{
+    padding:0;
+}
+.options .items li
+{
+    margin-top:5%;
+    font-weight: 500;
+}
+.appointment .options ul li i
+{
+    padding:10px;
+    margin:0 10px 0 0;
+    color:#03362f;
+    background-color: #57C5B6;
+    border-radius:5px;
+}
+.options p
+{
+    margin-bottom:0;
+}
+.options .booking
+{
+    display:flex;
+    justify-content: center;
+    margin-top:5%;
+}
+.options .booking .book
+{
+    border:0;
+    background-color:#57C5B6;
+    padding:10px 30px;
+    font-weight: 600;
+    border-radius:5px;
+    outline:3px solid #57C5B6;
+}
+.options .booking .book:hover
+{
+    outline-offset: 6px;
+}
+.services .heading
+{
+    margin:20px 20px 40px 20px;
+}
+.services .heading span
+{
+    color:#1A5F7A;
+}
+.type_cards
+{
+        margin:0 20px;
+        display:grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        grid-column-gap:20px;
+        grid-row-gap:20px;
+        z-index:-1;
+}
+.type_cards .card
+{
+    padding:4% 4% 0 4%;
+    border:none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: all 0.5s;
+}
+
+.type_cards .card:hover
+{
+    color:white;
+    background-color:#159895;
+}
+.type_cards .card:hover .icon p,.type_cards .card:hover .icon i,.type_cards .card:hover .learnMore h6,.type_cards .card:hover .learnMore i
+{
+    color:white;
+}
+.type_cards .card .icon
+{
+    display: flex;
+    height:70px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.type_cards .card .icon i
+{
+    margin-top: 10%;
+    font-size: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:#1A5F7A;
+}
+.type_cards .card .icon div:nth-child(1)
+{
+    width:40%;
+}
+.type_cards .card .icon div:nth-child(2)
+{
+    width:60%;
+}
+.type_cards .card .icon p
+{
+    margin: 0;
+    padding: 0;
+    font-size: 30px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color:#1A5F7A;
+}
+.type_cards .card .learnMore
+{
+    display: flex;
+    height:70px;
+    justify-content: center;
+}
+.type_cards .card .learnMore i
+{
+    margin-left: 2%;
+    margin-top: 1%;
+    color: #1A5F7A;
+}
+.type_cards .card .learnMore h6
+{
+    color:#1A5F7A;
+}
+.type_cards .card .desc
+{
+    height:70px;
+    margin:10%;
+    display: flex;
+    justify-content: center;
+}
+.type_cards .card .desc p
+{
+    margin:0;
+    padding: 0;
+    font-size: large;
+}
+.specialists
+{
+        margin:20px;
+        display:grid;
+        grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+        grid-column-gap:50px;
+        grid-row-gap:50px;
+        z-index:-1;
+}
+
+.specialists .doctor_card
+{
+    padding:4% 15%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius:5px;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+@media(max-width:1286px)
+{
+    .specialists .doctor_card
+    {
+        padding:4% 25%;
+    }
+}
+@media(max-width:995px)
+{
+    .specialists .doctor_card
+    {
+        padding:4% 30%;
+    }
+}
+@media(max-width:770px)
+{
+    .specialists .doctor_card
+    {
+        padding:4% 23%;
+    }
+}
+@media(max-width:535px)
+{
+    .specialists .doctor_card
+    {
+        padding:4% 21%;
+    }
+}
+@media(max-width:455px)
+{
+    .specialists .doctor_card
+    {
+        padding:4% 17%;
+    }
+}
+.doctor_card img
+{
+    height:300px;
+    width:100%;
+}
+.doctor_card h5
+{
+    margin:20px 0 0 0;
+    color:#1A5F7A;
+    font-size: 25px;
+    font-weight:600;
+}
+.doctor_card p
+{
+    color:black;
+    font-size: 20px;
+}
+.doctor_head
+{
+    margin:40px 20px 20px 20px;
+    display:flex;
+    justify-content: center;
+}
+.doctor_head span
+{
+    color:#1A5F7A;
+}
+@media(max-width:1207px)
+{
+    .features
+    {
+        margin:0px;
+    }
+    .features .advantages h3
+    {
+        margin:0 20px;
+    }
+    .appointment
+    {
+        margin:0px;
+    }
+}
+@media(max-width:1000px)
+{
+    .features
+    {
+        flex-wrap: wrap;
+        flex-direction: column;
+    }
+    .appointment
+    {
+        justify-content: center;
+        flex-wrap:wrap;
+        flex-direction: column;
+    }
+    .advantages
+    {
+        justify-content: center;
+        margin:20px 0;
+    }
+    .options
+    {
+        justify-content: center;
+        margin:20px 0;
+    }
+    .image1
+    {
+        justify-content: center;
+        padding:0px;
+        margin:20px 0;
+    }
+    .appointment .image2
+    {
+        justify-content: center;
+        padding:0px;
+        margin:140px 0;
+    }
+    .appointment .image2 img
+    {
+        height:50%;
+        width:50%;
+    }
+    .appointment .options
+    {
+        width:100%;
+        justify-content: center;
+        align-items: center;
+        padding:0 20px;
+    }
+}
+@media(max-width:450px)
+{
+    .main
+    {
+        padding:0;
+    }
+}

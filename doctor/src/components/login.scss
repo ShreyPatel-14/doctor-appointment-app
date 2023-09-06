@@ -1,0 +1,80 @@
+
+.color1{
+  background-color:#002B5B;
+  color: white;
+}
+.color2{
+  background-color:#159895;
+  color: white;
+}
+.btn-c1:hover
+{
+  color: #002B5B;
+  border: 1px solid #002B5B;
+}
+.btn-c2:hover
+{
+  color: #159895;
+  border: 1px solid #159895;
+}
+.main{
+  display: flex;
+  height:100vh;
+  position: relative;
+  .back{
+    display: flex;
+    position: relative;
+    width: 100%;
+    .signin{
+      width: 50vw;
+    }
+    .signup{
+      
+      width: 50vw;
+    }
+  }
+  .move{
+    margin-left: 50%;
+  }
+  
+  .front{
+    
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.5s;
+    height:100vh;
+    .head{
+      display: flex;
+      justify-content: center;
+    }
+    .content{
+      display: flex;
+      align-items:center;
+      justify-content: center;
+      font-size: 18px;
+      .link{
+        display: block;
+        font-size: 20px;
+        color: white;
+        font-weight: bold;
+        border:0;
+      }
+    }
+  }
+}
+
+// .signin-main{
+//   display: flex-column;
+//   justify-content: center;
+//   align-items: center;
+//   height:100vh;
+// }
+@media(max-width:575.9px)
+{
+  .main{
+    visibility: hidden;
+  }
+}

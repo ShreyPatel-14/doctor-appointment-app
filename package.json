@@ -1,0 +1,13 @@
+{
+  "scripts": {
+    "doctor": "cd doctor && npm start",
+    "backend": "cd backend && npm start",
+    "dev": "concurrently \"npm run doctor\" \"npm run backend\""
+  },
+  "dependencies": {
+    "concurrently": "^8.2.1",
+    "express": "^4.18.2",
+    "mongoose": "^7.4.4",
+    "react-router-dom": "^6.15.0"
+  }
+}

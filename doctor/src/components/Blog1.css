@@ -1,0 +1,127 @@
+/* body
+{
+  background-color: #b1dcd7;
+} */
+.blog-title
+{
+  display: flex;
+  justify-content:center;
+}
+.blog-main
+{
+  padding:70px 0 50px 0;
+}
+.blog-area
+{
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(350px,1fr));
+  grid-column-gap: 30px;
+  grid-row-gap: 30px;
+  z-index: -1;
+  margin-top: 4%;
+}
+
+.blog-area .blog-card
+{
+  border:none;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  border-radius:5px;
+}
+.blog-area .blog-card:hover
+{
+  background-color:#159895;
+  transition:all 0.5s;
+  
+}
+.blog-area .blog-card:hover .bhead .title,.blog-area .blog-card:hover .bhead .title p,.blog-area .blog-card:hover .bbody,.blog-area .blog-card:hover .bbody .p2
+{
+  color:white;
+}
+.blog-area .blog-card:hover .btail button
+{
+  color:white;
+  background:transparent;
+}
+.blog-area .blog-card .bhead
+{
+  display: flex;
+  justify-content: flex-start;
+}
+
+.blog-area .blog-card .bhead .bimage
+{
+  display: flex;
+  margin-left: 4%;
+  margin-top: 4%;
+}
+
+.blog-area .blog-card .bhead .bimage img
+{
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+}
+
+.blog-area .blog-card .bhead .title
+{
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-left: 5%;
+  margin-top: 3%;
+}
+
+.blog-area .blog-card .bhead .title h5
+{
+  font-size: 20px;
+  font-weight: bold;
+  margin:0;
+  padding:0;
+}
+
+.blog-area .blog-card .bhead .title p
+{
+  font-size: 15px;
+  font-weight: lighter;
+  color: rgb(70, 69, 69);
+}
+
+.blog-area .blog-card .bbody
+{
+  height: 230px;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  padding:0 5%;
+}
+
+.blog-area .blog-card .bbody .p1
+{
+  font-weight: bolder; 
+}
+
+.blog-area .blog-card .bbody .p2
+{
+  color:rgb(85, 85, 85);
+}
+
+.blog-area .blog-card .btail
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2%;
+}
+
+.blog-area .blog-card .btail button
+{
+  border: none;
+  background-color: white;
+}
+
+.model-content .modal-header h4
+{
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,35 @@
+.xyz{
+    width:100%;
+    font-size: medium;
+  }
+  .abc{
+    width:50%;
+  }
+
+  .form-label{
+    font-weight: bold;
+  }
+  
+  
+  .ptag{
+    margin: 10px;
+    margin-left: 50px;
+  }
+  
+  
+    .border,
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    textarea {
+      resize: vertical;
+    }
+  
+  .hov:hover{
+    box-shadow: 0 10px 15px -3px rgb(46 41 51 / 8%), 0 4px 6px -2px rgb(71 63 79 / 16%);
+  }

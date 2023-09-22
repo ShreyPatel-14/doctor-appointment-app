@@ -10,6 +10,8 @@ function Signin(props) {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
   const [line, setLine] = useState("");
+  const [mail, setMail] = useState("");
+  const [pass, setPass] = useState("");
 
   function handleInput(e) {
     const name = e.target.name;
@@ -27,14 +29,29 @@ function Signin(props) {
         },
       });
       result = await result.json();
-      if (result.error) {
-        setLine(result.error);
+      if (result.mail) {
+        setMail(result.mail);
+        setPass("");
+      } else if (result.pass) {
+        setPass(result.pass);
+        setMail("");
       } else if (result.message) {
-        navigate("/");
-        localStorage.setItem("swapIcons", true);
-        localStorage.setItem("email", result.getemail);
-        localStorage.setItem("Id",result.getid)
-        window.location.reload();
+        setMail("");
+        setPass("");
+        if (result.isdoctor) {
+          localStorage.setItem("is_doctor", true);
+          localStorage.setItem("swapIcons", true);
+          localStorage.setItem("email", result.getemail);
+          localStorage.setItem("Id", result.getid);
+          navigate("/dashboard");
+          window.location.reload();
+        } else {
+          localStorage.setItem("swapIcons", true);
+          localStorage.setItem("email", result.getemail);
+          localStorage.setItem("Id", result.getid);
+          navigate("/");
+          window.location.reload();
+        }
       }
       console.warn(result);
     } catch (error) {
@@ -73,7 +90,19 @@ function Signin(props) {
                 required
               />
             </Box>
-
+            {mail && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "flex-end",
+                }}
+              >
+                <Alert severity="error" sx={{ width: "56.5%", m: 1 }}>
+                  {mail}
+                </Alert>
+              </Box>
+            )}
             <Box
               sx={{
                 display: "flex",
@@ -93,20 +122,20 @@ function Signin(props) {
                 variant="standard"
                 required
               />
-              </Box>
-               <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "flex-end",
-              }}
-            >
-              {line && (
-                <Alert severity="error" sx={{ width: "56.5%", m: 1 }}>
-                  {line}
-                </Alert>
-              )}
             </Box>
+            {pass && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "flex-end",
+                }}
+              >
+                <Alert severity="error" sx={{ width: "56.5%", m: 1 }}>
+                  {pass}
+                </Alert>
+              </Box>
+            )}
           </Box>
           <div className="d-flex justify-content-center mt-4">
             <input

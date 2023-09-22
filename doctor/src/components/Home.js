@@ -5,8 +5,15 @@ import Doctor_image2 from "../doctor2.webp";
 import { Link } from "react-router-dom";
 import pic from "./about.jpg";
 import "./about.scss";
+import Main from "../Doctor/Main";
 function Home() {
   return (
+    <>
+    { localStorage.getItem("is_doctor") ? (
+      <>
+      
+      </>
+    ) : (
     <div className="container main-page" data-bs-smooth-scroll="true">
       <div className="title">
         <div className="heading">
@@ -315,8 +322,10 @@ function Home() {
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>)}
+    </>
+  )
+  ;
 }
 
 export default Home;

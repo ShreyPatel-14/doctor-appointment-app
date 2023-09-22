@@ -1,0 +1,82 @@
+/* styles.css */
+
+/* Reset some default styles */
+body,
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+/* Center the app content */
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #f4f4f4;
+}
+
+
+/* Pagination styles */
+.pagination {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination a {
+  padding: 10px 15px;
+  border-radius: 5px;
+  border: 1px solid #6c7ac9;
+  color: #6c7ac9;
+  text-decoration: none;
+  /* transition: background-color 0.3s, color 0.3s; */
+}
+
+
+.pagination a:hover {
+  background-color: #6c7ac9;
+  color: #fff;
+}
+
+
+.pagination .active a {
+  background-color: #6c7ac9;
+  color: #fff;
+  pointer-events: none; /* Disable clicks on the active page */
+}
+
+.pagination .disabled a {
+  color: rgb(198, 197, 202);
+  border: 1px solid rgb(198, 197, 202);
+  pointer-events: none; /* Disable clicks on disabled pages */
+  /* display: none; */
+}
+.pagination .active {
+  display: flex;
+  align-items: center;
+}
+
+/* Responsive styles */
+/* @media (max-width: 768px) {
+  .pagination {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .pagination li {
+    margin: 5px 0;
+  }
+} */
+
+  

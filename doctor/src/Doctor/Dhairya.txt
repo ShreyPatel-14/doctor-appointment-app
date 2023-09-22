@@ -1,0 +1,174 @@
+import React, { useState, useEffect } from 'react';
+import './Appointment.scss';
+import ReactPaginate from 'react-paginate';
+import Calendar from 'react-calendar';
+import './calendar.css';
+
+function Appointment() {
+  const [totalItems, setTotalItems] = useState(0);
+  const [appointments, setAppointments] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [date, setDate] = useState(new Date());
+  const itemsPerPage = 7;
+  const pageCount = Math.ceil(totalItems / itemsPerPage);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        let response = await fetch("http://localhost:5001/appoints_data", {
+          method: "post",
+          body: JSON.stringify({ date: date }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          response = await response.json();
+          const updatedAppointments = response.name.map((item, index) => ({
+            id: item._id,
+            Name: `${item.firstname} ${item.lastname}`,
+            Schedule: item.time_slot,
+            VisitedBit: item.visited_bit,
+            Index: index,
+            Status: item.status_bit
+          }));
+
+          setAppointments(updatedAppointments);
+          setTotalItems(updatedAppointments.length);
+        } else {
+          console.error("Error while fetching data");
+        }
+      } catch (error) {
+        console.error("Error while fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, [date]);
+
+  const toggleVisited = async (index, patientId) => {
+    try {
+      const updatedAppointments = [...appointments];
+      const appointmentIndex = updatedAppointments.findIndex(
+        (item) => item.Index === index
+      );
+
+      if (appointmentIndex !== -1) {
+        const updatedAppointment = { ...updatedAppointments[appointmentIndex] };
+        updatedAppointment.VisitedBit =
+          updatedAppointment.VisitedBit === 1 ? 0 : 1;
+
+        updatedAppointments[appointmentIndex] = updatedAppointment;
+        setAppointments(updatedAppointments);
+
+        const response = await fetch("http://localhost:5001/change_data", {
+          method: "post",
+          body: JSON.stringify({
+            visited_bit: updatedAppointment.VisitedBit,
+            p_id: patientId,
+            date: date
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (!response.ok) {
+          console.error("Error while updating data");
+        }
+      }
+    } catch (error) {
+      console.error("Error while updating data:", error);
+    }
+  };
+
+  const handlePageClick = (selectedPage) => {
+    setCurrentPage(selectedPage.selected + 1);
+  };
+
+  return (
+    <>
+      <div className="main2">
+        <div className="container-1">
+          <h2 className="animate__animated animate__slideInDown">Appointments</h2>
+        </div>
+        <div className="row container-2">
+          <div className="col-md">
+            <Calendar onChange={(e) => setDate(e)} value={date} />
+          </div>
+          <div className="col-md column_appointment">
+            <div className="d-flex justify-content-between">
+              <h2 className="appointments">Appointments</h2>
+              <div className="dates">{date.toDateString()}</div>
+            </div>
+            <div className="appointments_content">
+              {totalItems === 0 ? (
+                <div className="no_appo_text">
+                  There Is No appointments for the date
+                </div>
+              ) : (
+                <>
+                  <div className="row justify-content-around heads">
+                    <div className="col mb-3">Name</div>
+                    <div className="col mb-3">Schedule</div>
+                    <div className="col mb-3">Action</div>
+                  </div>
+                  {appointments
+                    .slice(
+                      (currentPage - 1) * itemsPerPage,
+                      currentPage * itemsPerPage
+                    )
+                    .map((item) => (
+                      <div
+                        className="row justify-content-around text"
+                        key={item.id}
+                      >
+                        <div className="col mb-3">{item.Name}</div>
+                        <div className="col mb-3">{item.Schedule}</div>
+                        <div className="col mb-3">
+                          {
+                            item.Status===1?
+                          <button
+                            className="box"
+                            onClick={() => toggleVisited(item.Index, item.id)}
+                          >
+                            {item.VisitedBit === 1 ? "Visited" : "Not Visited"}
+                          </button>
+                          :
+                          <button className='box' disabled>
+                            {item.VisitedBit === 0 ? "Cancelled" : "Rejected"}
+                          </button>
+                          }
+                        </div>
+                      </div>
+                    ))}
+                </>
+              )}
+            </div>
+            <div className="row mb-1 justify-content-around">
+              {totalItems > itemsPerPage ? (
+                <ReactPaginate
+                  previousLabel={<i className="fa-solid fa-angle-left"></i>}
+                  nextLabel={<i className="fa-solid fa-angle-right"></i>}
+                  breakLabel={'...'}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={3}
+                  onPageChange={handlePageClick}
+                  containerClassName={'pagination'}
+                  subContainerClassName={'pages pagination'}
+                  activeClassName={'active'}
+                />
+              ) : (
+                ""
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default Appointment;

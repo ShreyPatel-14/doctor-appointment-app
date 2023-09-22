@@ -22,7 +22,6 @@ mongoose
   .catch((err) => {
     console.error(err);
   });
-
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -34,6 +33,10 @@ const UserSchema = new mongoose.Schema({
   },
   password: {
     type: String,
+    required: true,
+  },
+  is_doctor: {
+    type: Boolean,
     required: true,
   },
 });
@@ -64,9 +67,6 @@ const PatientSchema = new mongoose.Schema({
   contact1: {
     type: Number,
     required: true,
-  },
-  contact2: {
-    type: Number,
   },
   address: {
     type: String,
@@ -104,10 +104,10 @@ const PatientSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  user_mail:{
-    type:String,
-    required:true,
-  }
+  user_mail: {
+    type: String,
+    required: true,
+  },
 });
 const Patient = mongoose.model("appoints", PatientSchema);
 Patient.createIndexes();
@@ -183,7 +183,12 @@ app.post("/register", async (req, res) => {
       return res.status(401).json({ error: "Email is aldready registered" });
     }
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ name, email, password: hashedPassword });
+    const newUser = new User({
+      name,
+      email,
+      password: hashedPassword,
+      is_doctor: false,
+    });
     await newUser.save();
     res.status(201).json({ message: "User signed up successfully." });
   } catch (error) {
@@ -195,20 +200,29 @@ app.post("/login", async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(401).json({ error: "Mail id not found" });
+      return res.status(401).json({ mail: "Mail id not found" });
     }
 
     const pwd = await bcrypt.compare(password, user.password);
     if (!pwd) {
-      return res.status(401).json({ error: "Invalid password" });
+      return res.status(401).json({ pass: "Invalid password" });
     } else {
       console.log("success");
     }
-    res.json({
-      message: "Login successful",
-      getemail: email,
-      getid: user._id.toString(),
-    });
+    if (user.is_doctor) {
+      res.json({
+        message: "Login successful",
+        getemail: email,
+        getid: user._id.toString(),
+        isdoctor: true,
+      });
+    } else {
+      res.json({
+        message: "Login successful",
+        getemail: email,
+        getid: user._id.toString(),
+      });
+    }
   } catch (error) {
     res.status(500).json({ error: "An error occurred." });
   }
@@ -231,7 +245,7 @@ app.post("/appointment", async (req, res) => {
       status_bit,
       time_slot,
       visited_bit,
-      user_mail
+      user_mail,
     } = req.body;
     const newPatient = new Patient({
       firstname,
@@ -249,7 +263,7 @@ app.post("/appointment", async (req, res) => {
       status_bit,
       time_slot,
       visited_bit,
-      user_mail
+      user_mail,
     });
     await newPatient.save();
     res.status(201).json({ message: "Form submitted successfully" });
@@ -298,7 +312,11 @@ app.post("/specialisation", async (req, res) => {
     const doct_id = doc_obj[0]._id.toString();
     const doct_slot = doc_obj[0].timing_slot;
     const v = await Patient.find(
-      { doctor_name: doct_name, date: newdate, $or:[{status_bit:1},{status_bit:2}] },
+      {
+        doctor_name: doct_name,
+        date: newdate,
+        $or: [{ status_bit: 1 }, { status_bit: 2 }],
+      },
       { time_slot: 1, _id: 0 }
     );
     console.log("----------------------");
@@ -335,10 +353,27 @@ app.post("/specialisation", async (req, res) => {
 app.post("/yourappoints", async (req, res) => {
   try {
     const { email } = req.body;
-    const data=await Patient.find({user_mail:email},{firstname:1,lastname:1,date:1,specialisation:1,doctor_name:1,status_bit:1,time_slot:1,_id:1,visited_bit:1}).sort({date:-1}) 
-    res.status(201).json({ message: "Got Patient Data successfully.",history:data});
+    const data = await Patient.find(
+      { user_mail: email },
+      {
+        firstname: 1,
+        lastname: 1,
+        date: 1,
+        specialisation: 1,
+        doctor_name: 1,
+        status_bit: 1,
+        time_slot: 1,
+        _id: 1,
+        visited_bit: 1,
+      }
+    ).sort({ date: -1 });
+    res
+      .status(201)
+      .json({ message: "Got Patient Data successfully.", history: data });
   } catch (error) {
-    res.status(500).json({ error: "An error occurred in getting patient data" });
+    res
+      .status(500)
+      .json({ error: "An error occurred in getting patient data" });
   }
 });
 
@@ -346,35 +381,46 @@ app.post("/cancelappoint", async (req, res) => {
   try {
     const { _id } = req.body;
 
-    await Patient.updateOne({_id},{$set:{status_bit:0}})
-    res.status(201).json({ message: "Cancelled successfully."});
+    await Patient.updateOne({ _id }, { $set: { status_bit: 0 } });
+    res.status(201).json({ message: "Cancelled successfully." });
   } catch (error) {
-    res.status(500).json({ error: "An error occurred in getting patient data" });
+    res
+      .status(500)
+      .json({ error: "An error occurred in getting patient data" });
   }
 });
 app.post("/updateappoint", async (req, res) => {
   try {
-    const { _id,date,time_slot } = req.body;
-    await Patient.updateOne({_id},{$set:{date:date,time_slot:time_slot}})
-    res.status(201).json({ message: "Updated successfully."});
+    const { _id, date, time_slot } = req.body;
+    await Patient.updateOne(
+      { _id },
+      { $set: { date: date, time_slot: time_slot } }
+    );
+    res.status(201).json({ message: "Updated successfully." });
   } catch (error) {
-    res.status(500).json({ error: "An error occurred in getting patient data" });
+    res
+      .status(500)
+      .json({ error: "An error occurred in getting patient data" });
   }
 });
 app.post("/updatemodal", async (req, res) => {
   try {
-    const { _id,date,doctor } = req.body;
-    console.log(date,doctor);
+    const { _id, date, doctor } = req.body;
+    console.log(date, doctor);
     console.log("----------------------");
-    const date1=new Date(date)
-    console.log(date1)
+    const date1 = new Date(date);
+    console.log(date1);
     const doc_obj = await Doctor.find(
-      { name:doctor },
-      { timing_slot: 1,_id:0 }
+      { name: doctor },
+      { timing_slot: 1, _id: 0 }
     );
     const doct_slot1 = doc_obj[0].timing_slot;
     const v = await Patient.find(
-      { doctor_name: doctor, date: date1, $or:[{status_bit:1},{status_bit:2}] },
+      {
+        doctor_name: doctor,
+        date: date1,
+        $or: [{ status_bit: 1 }, { status_bit: 2 }],
+      },
       { time_slot: 1, _id: 0 }
     );
     console.log("----------------------");
@@ -403,6 +449,87 @@ app.post("/updatemodal", async (req, res) => {
   }
 });
 
+app.post("/appoints_data", async (req, res) => {
+  try {
+    const { date, doctor_mail } = req.body;
+    console.log("dm", doctor_mail);
+    const doctor_id = await Doctor.findOne({ email: doctor_mail }, { _id: 1 });
+    const doc_id = doctor_id._id.toString();
+    console.log("di", doc_id);
+    console.log("express-date", date);
+    const name = await Patient.find({ date, doctor_id: doc_id });
+    console.log('name',name);
+    res
+      .status(201)
+      .json({ message: "User signed up successfully.", name: name });
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred." });
+  }
+});
+app.post("/recent_appoints_data", async (req, res) => {
+  try {
+    const { date, doctor_mail } = req.body;
+    // console.log("express-date",date);
+    const doctor_id = await Doctor.findOne({ email: doctor_mail }, { _id: 1 });
+    const doc_id = doctor_id._id.toString();
+    console.log(doc_id);
+    const all_data = await Patient.find({ doctor_id: doc_id });
+    console.log(all_data.length);
+
+    const name = await Patient.find({
+      date: { $lte: date },
+      doctor_id: doc_id,
+    }).sort({
+      date: -1,
+      time_slot: -1,
+    });
+    // console.log(name);
+    res.status(201).json({ message: "recent appoint ments.", name: name });
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred." });
+  }
+});
+app.post("/change_data", async (req, res) => {
+  try {
+    const { v_bit, p_id, date, doctor_mail } = req.body;
+    console.log(doctor_mail);
+    const doctor_id = await Doctor.findOne({ email: doctor_mail }, { _id: 1 });
+    const doc_id = doctor_id._id.toString();
+    console.log(doc_id);
+    // console.log("express-date", v_bit);
+    const name = await Patient.updateOne(
+      {
+        $and: [
+          { _id: p_id },
+          { date: date },
+          { status_bit: 1 },
+          { doctor_id: doc_id },
+        ],
+      },
+      { $set: { visited_bit: v_bit } }
+    );
+    console.log(name);
+    res.status(201).json({ message: "succesfully updates." });
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred." });
+  }
+});
+app.post("/change_data_dashboard", async (req, res) => {
+  try {
+    const { s_bit, p_id, date } = req.body;
+    console.log("express-date", date);
+    // const newDate=new ISODate(date);
+    // console.log("new",newDate);
+    const name = await Patient.updateOne(
+      { $and: [{ _id: p_id }, { date: date }] },
+      { $set: { status_bit: s_bit } }
+    );
+    console.log(name);
+    res.status(201).json({ message: "succesfully updates." });
+  } catch (error) {
+    res.status(500).json({ error: "An error occurred." });
+  }
+});
 // const sendData = async () => {
 //   try {
 //     const spec = [
@@ -451,4 +578,21 @@ app.post("/updatemodal", async (req, res) => {
 //   }
 // };
 // sendData();
+// const sendData = async () => {
+//     try {
+//       const doc_spec_map = [
+//         {name:'Dr Dhairya Patel',password:'Dpatel@1234',email:'dhairya@gmail.com',is_doctor:true},
+//         {name:'Dr Shrey Patel',password:'Spatel@1234',email:'shrey@gmail.com',is_doctor:true},
+//         {name:'Dr Henil Patel',password:'Hpatel@1234',email:'henil@gmail.com',is_doctor:true},
+//         {name:'Dr Mansi Parmar',password:'Mparmar@1234',email:'mansi@gmail.com',is_doctor:true},
+//         {name:'Dr Jinay Doshi',password:'Jdoshi@1234',email:'jinay@gmail.com',is_doctor:true},
+//         {name:'Dr Jayveersinh Jadeja',password:'Jjade@1234',email:'jayveersinh@gmail.com',is_doctor:true},
+
+//       ];
+//       const s1 = await User.insertMany(doc_spec_map);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+// sendData()
 app.listen(5000);

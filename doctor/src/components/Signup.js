@@ -10,8 +10,9 @@ import Alert from "@mui/material/Alert";
 function Signup() {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
-  const [format, setFormat] = useState("");
-  const [val, setVal] = useState("");
+  const [mail, setMail] = useState("");
+  const [pass, setPass] = useState("");
+
   function handleInput(e) {
     const name = e.target.name;
     const value = e.target.value;
@@ -24,11 +25,14 @@ function Signup() {
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     const { email, password } = user;
     if (!e1.test(email)) {
-      setFormat("Please enter Valid Email id!");
+      setMail("Please enter Valid Email id!");
+      setPass("");
     } else if (!p1.test(password)) {
-      setFormat("Please enter Valid Password!");
+      setPass("Please enter Valid Password!");
+      setMail("");
     } else {
-      setFormat("");
+      setMail("");
+      setPass("");
       let result = await fetch("http://localhost:5000/register", {
         method: "post",
         body: JSON.stringify(user),
@@ -37,11 +41,9 @@ function Signup() {
         },
       });
       result = await result.json();
-      if(result.error)
-      {
-        setFormat("Email id is aldready registered")
-      }
-      else if(result.message) {
+      if (result.error) {
+        setMail("Email id is aldready registered");
+      } else if (result.message) {
         navigate("/login/signin");
       }
       console.warn(result);
@@ -110,7 +112,19 @@ function Signup() {
                 required
               />
             </Box>
-
+            {mail && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "flex-end",
+                }}
+              >
+                <Alert severity="error" sx={{ width: "56.5%", m: 1 }}>
+                  {mail}
+                </Alert>
+              </Box>
+            )}
             <Box
               sx={{
                 display: "flex",
@@ -131,19 +145,19 @@ function Signup() {
                 required
               />{" "}
             </Box>
-            <Box
-              sx={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "flex-end",
-              }}
-            >
-              {format && (
+            {pass && (
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "flex-end",
+                }}
+              >
                 <Alert severity="error" sx={{ width: "56.5%", m: 1 }}>
-                  {format}
+                  {pass}
                 </Alert>
-              )}
-            </Box>
+              </Box>
+            )}
           </Box>
           <div className="d-flex justify-content-center mt-3">
             <input

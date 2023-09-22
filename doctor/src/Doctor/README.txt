@@ -1,0 +1,11 @@
+-> Add Link of Bootstrap 5 in index.html
+-> Add Link for Fontawesome
+-> Add Link for animate.css
+
+-> npm install react-icons
+-> npm install react-router
+-> npm install react-calendar
+-> npm install react-multi-date-picker
+-> npm install node-sass
+-> npm install react-paginate
+-> npm install axios

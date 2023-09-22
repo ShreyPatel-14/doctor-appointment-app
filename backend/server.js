@@ -5,8 +5,8 @@ var trans = nm.createTransport({
   port: 465,
   secure: true,
   auth: {
-    user: "pshrey964@gmail.com",
-    pass: "krgliepdqhbsqtii",
+    user: "healixpvtltd@gmail.com",
+    pass: "gafl wpuh nbnr fovu",
   },
 });
 
@@ -268,7 +268,7 @@ app.post("/appointment", async (req, res) => {
     await newPatient.save();
     res.status(201).json({ message: "Form submitted successfully" });
     var mailoption = {
-      from: "pshrey964@gmail.com",
+      from: "healixpvtltd@gmail.com",
       to: user_mail,
       subject: "Confirmation of Your Scheduled Appointment",
       // html:`<h2>Your Appointment booked successfully</h2><h3>Appointment details:</h3><p>Name:${firstname}</p><p>Contact:${contact1}</p><p>Date:${date}</p><p>Specialisation:${specialisation}</p><p>Doctor name:${doctor_name}</p><p>Timing:${time_slot}</p>`
@@ -525,6 +525,27 @@ app.post("/change_data_dashboard", async (req, res) => {
       { $set: { status_bit: s_bit } }
     );
     console.log(name);
+    const patient_ids = await Patient.findOne({_id:p_id},{patient_id:1,_id:0})
+    console.log(patient_ids)
+    var ObjectId = require('mongodb').ObjectId
+    const obj_id = new ObjectId(patient_ids.patient_id)
+    console.log(obj_id)
+    const patient_email = await User.findOne({_id:obj_id},{email:1,_id:0})
+    console.log(patient_email)
+    var mailoption = {
+      from: "healixpvtltd@gmail.com",
+      to: patient_email.email,
+      subject: "Rejection of Your Scheduled Appointment",
+      // html:`<h2>Your Appointment booked successfully</h2><h3>Appointment details:</h3><p>Name:${firstname}</p><p>Contact:${contact1}</p><p>Date:${date}</p><p>Specialisation:${specialisation}</p><p>Doctor name:${doctor_name}</p><p>Timing:${time_slot}</p>`
+      html: `<p>You are rejected!</p>`,
+    };
+    trans.sendMail(mailoption, (err, info) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("email sent" + info.response);
+      }
+    });
     res.status(201).json({ message: "succesfully updates." });
   } catch (error) {
     res.status(500).json({ error: "An error occurred." });

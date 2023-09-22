@@ -91,7 +91,8 @@ function Dashboard() {
             body: JSON.stringify({
               s_bit: updatedAppointment.Status,
               p_id: patientId,
-              date: updatedAppointment.Date
+              date: updatedAppointment.Date,
+              
               // date: date
             }),
             headers: {

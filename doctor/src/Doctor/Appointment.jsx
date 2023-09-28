@@ -18,7 +18,7 @@ function Appointment() {
       try {
         let response = await fetch("http://localhost:5000/appoints_data", {
           method: "post",
-          body: JSON.stringify({ date: date.toDateString() }),
+          body: JSON.stringify({ date: date.toDateString(),doctor_mail:localStorage.getItem("email")  }),
           headers: {
             "Content-Type": "application/json",
           },
@@ -123,10 +123,10 @@ function Appointment() {
           }
         }
         else if(updatedAppointment.VisitedBit===1){
-          alert("Patient Is Already Visited So You Cannot Change Status to 'Not Visited'");
+          alert("Patient have already visited so you can\'t change status to 'Not Visited'");
         }
         else if(new Date(updatedAppointment.Date)>new Date()){
-          alert("Status Is not change for future dates");
+          alert("Status can\'t be changed for future dates");
         }
       }
     }
@@ -169,60 +169,63 @@ function Appointment() {
   // }
   return (
     <>
-      <div className='main2'>
+      <div className='main2 p-4'>
         <div className='container-1'>
-          <h2 className='animate__animated animate__slideInDown'>Appointments</h2>
+          <h2 className='animate__animated animate__slideInDown text-theme'>Appointments</h2>
         </div>
-        <div className='row container-2'>
-          <div className='col-md'>
+        <div className='d-md-flex container-2 pt-5'>
+          <div className=''>
             <Calendar onChange={(e) => setdate(e)} value={date} />
-            {/* minDate={new Date()}  */}
           </div>
-          <div className='col-md column_appointment'>
-            <div className='d-flex justify-content-between'>
+          <div className='column_appointment px-3'>
+            <div className='d-flex justify-content-between pt-2'>
               <h2 className='appointments'>Appointments</h2>
               <div className='dates'>{date.toDateString()}</div>
             </div>
-            <div className='appointments_content'>
+            <div className='appointments_content pt-4'>
               {
                 totalItems === 0 ?
                   <>
-                    <div className='no_appo_text'>There Is No appointments for the date </div>
+                    <div className='no-appo'>There is no appointments for this date </div>
                   </>
                   :
-                  <>
-                    <div className='row justify-content-around heads'>
-                      <div className='col mb-3'>Name</div>
-                      <div className='col mb-3'>Schedule</div>
-                      <div className='col mb-3'>Action</div>
-                    </div>
+                  <table className='table table-striped'>
+                    <thead className=''>
+                      <tr>
+                        <th className=''>Name</th>
+                        <th className=''>Schedule</th>
+                        <th className=''>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
                     {
                       MAP.slice(((currentPage - 1) * itemsPerPage), (currentPage * itemsPerPage)).map((item, index) => {
                         return (
-                          <div className='row justify-content-around text'>
-                            <div className='col mb-3'>{item.Name}</div>
-                            <div className='col mb-3'>{item.Schedule}</div>
-                            <div className='col mb-3'>
+                          <tr >
+                            <td className=''>{item.Name}</td>
+                            <td className=''>{item.Schedule}</td>
+                            <td className=''>
                               {
                                 item.Status === 1 ?
                                   <button
-                                    className="box"
+                                    className="btn-visit py-1"
                                     key={index}
                                     onClick={() => setselectfunction(item.Index, item.id)}
                                   >
                                     {item.VisitedBit === 1 ? "Visited" : "Not Visited"}
                                   </button>
                                   :
-                                  <button className='box_cr' style={{ backgroundColor: item.Status === 0 ? "#F1526E" : "#FF7777" }} disabled>
+                                  <button className={item.Status === 0 ? "cancel-btn py-1" : "reject-btn py-1"} disabled>
                                     {item.Status === 0 ? "Cancelled" : "Rejected"}
                                   </button>
                               }
-                            </div>
-                          </div>
+                            </td>
+                          </tr>
                         )
                       })
                     }
-                  </>
+                    </tbody>
+                  </table>
               }
             </div>
             <div className='row mb-1 justify-content-around'>

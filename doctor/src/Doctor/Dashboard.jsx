@@ -74,6 +74,7 @@ function Dashboard() {
       const updatedAppointments = [...MAP1];
       const appointmentIndex = updatedAppointments.findIndex(
         (item) => item.Index === index
+        
       );
         console.log("index",appointmentIndex);
       if (appointmentIndex !== -1) {
@@ -199,14 +200,14 @@ function Dashboard() {
   // }]
   return (
     <>
-      <div className='main3'>
-        <div className='dahsboard'>
-          <h2 className='animate__animated animate__slideInDown'>Dashboard</h2>
+      <div className='main3 p-4'>
+        <div className='mb-4'>
+          <h2 className='animate__animated animate__slideInDown text-theme'>Dashboard</h2>
         </div>
         {/* <div> */}
-        <div className='d-lg-flex justify-content-around patients_number'>
+        <div className='d-lg-flex justify-content-around patients_number mb-3'>
           {MAP.map((item) => {
-            return (<div className={"card" + item.count + " d-flex py-2 mx-2"}>
+            return (<div className={"card" + item.count + " d-flex py-2"}>
               <div className='count py-2 px-4'>{item.number}</div>
               <div className='count-txt px-3'>
                 <div className='d-inline'>{item.text1}</div><br />
@@ -219,61 +220,65 @@ function Dashboard() {
         {/* </div> */}
 
 
-        <div className='column_dashboard'>
+        <div className='column_dashboard py-4'>
           <div className='dashboard_1 d-flex justify-content-between'>
-            <h2 className='recent_appo'>Recent Appointments</h2>
+            <h2 className='recent_appo '>Recent Appointments</h2>
             <div className='dates1'><DatePicker onChange={(e) => setdate(new Date(e))} render={<Icon />} /> </div>
           </div>
           {/* to get the selected value from date picker, use usestate just like calendar. */}
-          <div className='dashboard_content'>
+          <div className='dashboard_content pt-4'>
             {
               totalItems === 0 ?
                 <>
-                  <div className='no_appo_text'>There Is No appointments for the date </div>
+                  <div className='mt-3 fs-18'>There Is No appointments for the date </div>
                 </>
                 :
-                <>
-                  <div className='row mb-1 justify-content-around head1'>
-                    <div className='col col-1 mb-3'>Sr. No</div>
-                    <div className='col col-2 mb-3'>Date</div>
-                    <div className='col col-2 mb-3'>Time</div>
-                    <div className='col col-3 mb-3'>Name</div>
-                    <div className='col col-2 mb-3'>Contact</div>
-                    <div className='col col-2 mb-3'>Action</div>
-                  </div>
+                <table className='table table-striped'>
+                  <thead className='thead-dark'>
+                    <tr>
+                      <th >Sr. No</th>
+                      <th >Date</th>
+                      <th >Time</th>
+                      <th >Name</th>
+                      <th >Contact</th>
+                      <th >Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                   {
                     MAP1.slice(((currentPage - 1) * itemsPerPage), (currentPage * itemsPerPage)).map((item, index) => {
                       return (
-                        <div className='row mb-1 justify-content-around'>
-                          <div className='col col-1 mb-3'>{item.Sr}</div>
-                          <div className='col col-2 mb-3'>{item.Date.toString().slice(0, 8) + (((parseInt(item.Date.toString()[8] + item.Date.toString()[9]) + 1).toString().length) === 1 ? "0" : "") + (parseInt(item.Date.toString()[8] + item.Date.toString()[9]) + 1)}</div>
-                          <div className='col col-2 mb-3'>{item.Time}</div>
-                          <div className='col col-3 mb-3'>{item.Name}</div>
-                          <div className='col col-2 mb-3'>{item.Contact}</div>
-                          <div className='col col-2 mb-3'>
+                        <tr >
+                          <th>{item.Sr}</th>
+                          <td >{item.Date.toString().slice(0, 8) + (((parseInt(item.Date.toString()[8] + item.Date.toString()[9]) + 1).toString().length) === 1 ? "0" : "") + (parseInt(item.Date.toString()[8] + item.Date.toString()[9]) + 1)}</td>
+                          <td >{item.Time}</td>
+                          <td >{item.Name}</td>
+                          <td >{item.Contact}</td>
+                          <td >
                             {
                               item.Status === 0 ?
-                                <button className="box_cr" key={index} disabled>
+                                <button className="cancel-btn py-1" key={index} disabled>
                                   Cancelled
                                 </button>
                                 :
                                 <button
-                                className={item.Status === 2 ? 'Rejected' : 'box'} key={index}
+                                className={item.Status === 2 ? 'py-1 rejected-btn' : 'py-1 py-1 approve-btn'} key={index}
                                   onClick={() => setselectfunction(item.Index, item.id)}
                                 >
                                   {item.Status === 1 ? "Approverd" : "Rejected"}
                                 </button>
                             }
 
-                          </div>
-                        </div>
+                          </td>
+                        </tr>
                       )
                     })
                   }
-                </>
+                  </tbody>
+                </table>
             }
           </div>
-          <div className='row mb-1 justify-content-around'>
+          <div className='row  justify-content-around'>
             {/* <div className='col'> */}
             {
               totalItems > itemsPerPage ?

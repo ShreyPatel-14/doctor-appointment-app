@@ -2,12 +2,12 @@ import React, { useState } from "react";
 import "./form2.css";
 import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
-import "./calendar.css";
+import "./calendar2.css";
 function Form2() {
   const navigate = useNavigate();
-  var [doc, setdoc] = useState("doctor");
+  var [doc, setdoc] = useState("Speciality Not Selected");
   var [user, setUser] = useState({});
-  var [slot, setSlot] = useState("Choose speciality");
+  var [slot, setSlot] = useState("Choose Speciality");
   var [slotflag, setSlotflag] = useState(false);
   var [dateflag, setDateflag] = useState(false);
   var [timinglist, setTiminglist] = useState([]);
@@ -143,197 +143,159 @@ function Form2() {
     }
   };
   return (
+  <body className="form2">
+    
     <div className="container">
+      <div className="m-3 mt-5">
+        <h1>Book Your Appointment</h1>
+      </div>
+      <div className="mx-3" style={{backgroundColor:"lightgrey",height:"1px",width:"97.5%"}}></div>
       <fieldset>
-        <form onSubmit={handleSubmit} className="xyz">
-          <div className="row">
-            <div className="col-md-6">
-              <label className="form-label col-sm-2">Name</label>
+        <form onSubmit={handleSubmit} className="mt-5">
+          
+          <div className="d-sm-flex name">
+            <div className="input-container mx-3">
+              <input type="text" name="firstname" onChange={handleInput} required/>
+              <label for="input" class="label">First Name</label>
+              <div class="underline"></div>
+            </div>
+            <div className="input-container mx-3 ">
+              <input type="text" name="lastname" onChange={handleInput} required/>
+              <label for="input" class="label">Last Name</label>
+              <div class="underline"></div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-6">
-              <input
-                type="text"
-                placeholder="first name"
-                name="firstname"
-                className="hov border"
-                onChange={handleInput}
-              />
+
+          <div className="d-sm-flex mt-5">
+            <div className="input-container mx-3">
+              <input type="text" name="age" onChange={handleInput} required/>
+              <label for="input" class="label">Age</label>
+              <div class="underline"></div>
             </div>
-            <div className="col-md-6">
-              <input
-                type="text"
-                placeholder="last name"
-                name="lastname"
-                className="hov border"
-                onChange={handleInput}
-              />
+            <div className="input-container mx-3 ">
+              <input type="text" name="weight" onChange={handleInput} required/>
+              <label for="input" class="label">Weight</label>
+              <div class="underline"></div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-6">
-              <label className="form-label">Gender</label>
+
+          <div className="d-sm-flex mt-5">
+            <div className="input-container mx-3">
+              <input type="text" name="address" onChange={handleInput} required/>
+              <label for="input" class="label">Address</label>
+              <div class="underline"></div>
+            </div>
+            <div className="input-container mx-3 ">
+              <input type="text" name="contact" onChange={handleInput} required/>
+              <label for="input" class="label">Contact Number</label>
+              <div class="underline"></div>
             </div>
           </div>
-          <div className="row">
-            <div className="col-md-2">
-              <input
-                type="radio"
-                name="gender"
-                value="male"
-                className="hov form-check-input"
-                onChange={handleInput}
-              />{" "}
-              Male
+
+          <div className="d-flex gen mx-3 mt-5 mb-4">
+            <div className="d-flex label">
+              <label><h4>Gender: </h4></label>  
             </div>
-            <div className="col-md-2">
-              <input
-                type="radio"
-                name="gender"
-                value="female"
-                className="hov form-check-input"
-                onChange={handleInput}
-              />{" "}
-              female
-            </div>
-            <div className="col-md-2">
-              <input
-                type="radio"
-                name="gender"
-                value="others"
-                className="hov form-check-input"
-                onChange={handleInput}
-              />{" "}
-              others{" "}
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              {" "}
-              <label className="form-label"> Age </label>
-              <input
-                type="number"
-                className="hov border"
-                name="age"
-                required
-                onChange={handleInput}
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label"> Weight </label>
-              <input
-                type="number"
-                className="hov border"
-                name="weight"
-                required
-                onChange={handleInput}
-              />
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <label className="form-label">Contact 1</label>
-              <input
-                type="number"
-                className="hov border"
-                name="contact1"
-                required
-                onChange={handleInput}
-              />
-            </div>
-            <div className="col-md-6">
-              <label className="form-label">Contact 2</label>
-              <input
-                type="number"
-                className="hov border"
-                name="contact2"
-                onChange={handleInput}
-              />
-            </div>
-          </div>
-          <label className="form-label"> Address </label>
-          <textarea
-            name="address"
-            id=""
-            cols="30"
-            rows="2"
-            className="hov"
-            required
-            onChange={handleInput}
-          ></textarea>
-          {/* <div className="row">
-            <div className="col-md-2">
-              <label className="form-label"> Date </label>
-            </div>
-            <div className="col-md-2">
-              <input
-                type="date"
-                name="date"
-                id=""
-                className="hov"
-                required
-                onChange={getvalue2}
-              />
-            </div>
-          </div> */}
-          <div className="row">
-            <div className="col-md-2">
-              <label className="form-label"> Date </label>
-            </div>
-            <Calendar
-              name="date"
-              className="hov"
-              required
-              onChange={getvalue2}
-              minDate={mindate}
-              maxDate={maxdate}
-            />
-          </div>
-          <div className="row">
-            <div className="col-md-6">
-              <label className="hov form-label"> Speciality </label>
-              <select
-                onChange={getValue}
-                className="hov specs"
-                name="specialisation"
-              >
-                <option selected disabled hidden>
-                  Choose speciality
-                </option>
-                {disesase.map((item) => {
-                  return <option>{item}</option>;
-                })}
-              </select>
-            </div>
-            <div className="col-md-6">
-              <label className="hov form-label"> Doctor </label>
-              <p>{doc}</p>
-            </div>
-          </div>
-          {dateflag === true && slotflag === true ? (
-            <div className="row">
-              <div className="col-md-6">
-                <label className="hov form-label"> Timing slots </label>
-                <select className="hov" name="time_slot" onChange={handleInput}>
-                  <option selected disabled hidden>
-                    Choose timing slots
-                  </option>
-                  {timinglist.map((item) => {
-                    return <option>{item}</option>;
-                  })}
-                </select>
+          
+            <div className="d-flex values mt-2">
+              <div className="mx-3">
+                  <input
+                    type="radio"
+                    name="gender"
+                    value="male"
+                    className="form-check-input mx-2"
+                    onChange={handleInput} 
+                  />
+                  Male
+              </div>
+
+              <div className="mx-3">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  className="form-check-input mx-2"
+                  onChange={handleInput}
+                />
+                Female
+              </div>
+
+              <div className="mx-3">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="others"
+                  className="hov form-check-input mx-2"
+                  onChange={handleInput}
+                />
+                Others
               </div>
             </div>
-          ) : (
-            ""
-          )}
-          <div className="row">
-            <input type="submit" value="Submit" className="col-md-6" />
           </div>
+          
+          <div className="d-lg-flex mb-0">
+            <div className="col-lg-6">
+              <div className="mx-3">
+                <div>
+                  <h4 className="mb-3">Choose Date: </h4>
+                </div>
+                <div>
+                  <div >
+                    <Calendar 
+                    name="date"
+                    
+                    required 
+                    onChange={getvalue2}
+                    minDate={mindate}
+                    maxDate={maxdate}/>
+                  </div>
+                </div>
+              </div>
+              <div >
+                <div >
+                  <label className="mx-3 mt-4 mb-3"><h4> Speciality: </h4></label>
+                  <select  onChange={getValue} name="specialisation" >
+                    <option selected disabled hidden>
+                      Choose speciality
+                    </option>
+                    {disesase.map((item) => {
+                      return <option>{item}</option>;
+                    })}
+                  </select>
+                </div>
+                <div >
+                  <label className="mx-3 mb-3"><h4>Doctor: </h4></label>
+                  <span className="fs-5">{doc}</span>
+                </div>
+              </div>
+            </div>
+            {dateflag === true && slotflag === true ? (
+              <div className="col-lg-6 px-3 mb-3">
+              <div >
+                <h4 className="mb-3">Timing Slots</h4>
+                {/* <button className="timing px-3 btn btn-outline-secondary">4:00 pm to 5:00 pm</button> */}
+                {/* <select  name="time_slot" >
+                  <option selected disabled hidden>
+                    Choose timing slots
+                  </option> */}<div className="d-flex flex-wrap">
+                  {timinglist.map((item) => {
+                    return <button className="timing px-4 m-2 btn btn-outline-secondary">{item}</button>;
+                  })}</div>
+                {/* </select> */}
+              </div>
+            </div>
+            ) : ( "" )}
+          </div>
+
+          <div className="mx-3 mb-3" style={{backgroundColor:"lightgrey",height:"1px",width:"97.5%"}}></div>
+          <div className="d-flex justify-content-center ">
+            <input type="submit" value="Confirm Booking" className="btn btn-outline-success mb-4 mx-3 fs-5" />
+          </div>
+
         </form>
       </fieldset>
     </div>
+  </body>
   );
 }
 

@@ -459,9 +459,7 @@ app.post("/appoints_data", async (req, res) => {
     console.log("express-date", date);
     const name = await Patient.find({ date, doctor_id: doc_id });
     console.log('name',name);
-    res
-      .status(201)
-      .json({ message: "User signed up successfully.", name: name });
+    res.status(201).json({ message: "User signed up successfully.", name: name });
   } catch (error) {
     res.status(500).json({ error: "An error occurred." });
   }

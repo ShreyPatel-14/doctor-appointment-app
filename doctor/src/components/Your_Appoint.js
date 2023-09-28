@@ -139,60 +139,64 @@ function Your_Appoint() {
 
   return (
     <>
-      <div className="background container">
-        <div>
-          <h2 className="animate__animated animate__slideInDown">
+      <div className="p-5 your-appointment">
+        <div className="my-5">
+          <h2 className="">
             Your Appointments
           </h2>
+          <div style={{"height":"1px","backgroundColor":"lightgray"}}></div>
         </div>
-        <div className="column_patients container">
-          <div className="d-flex justify-content-between">
-            <h2 className="patients">All Appointments</h2>
+        <div className="">
+          <div className="d-flex">
+            
             {/* <div className='date'><DatePicker onChange={(e) => setdate(new Date(e))} render={<Icon />} /></div> */}
             {/* to get the selected value from date picker, use usestate just like calendar. */}
           </div>
-          <div className="patients_content">
+          <div className="d-flex justify-content-center mx-3 ">
             {data.length === 0 ? (
               <>
-                <div className="no_appo_text">
-                  There Is No appointments for the user
+                <div className="fs-2 h-32">
+                  There is No appointments for the user
                 </div>
               </>
             ) : (
-              <>
-                <div className="row mb-1 justify-content-around head">
-                  <div className="col col-1 mb-3">Sr. No</div>
-                  <div className="col col-2 mb-3">Name</div>
-                  <div className="col col-1 mb-3">Date</div>
-                  <div className="col col-1 mb-3">Specialisation</div>
-                  <div className="col col-2 mb-3">Doctor Name</div>
-                  <div className="col col-2 mb-3">Time Slot</div>
-                  <div className="col col-2 mb-3"></div>
-                  <div className="col col-2 mb-3"></div>
-                </div>
+              <table className="table table-striped">
+                <thead className="">
+                  <tr>
+                  <th scope="col">Sr. No</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Specialisation</th>
+                  <th scope="col">Doctor Name</th>
+                  <th scope="col">Time Slot</th>
+                  <th scope="col"></th>
+                  <th scope="col"></th>
+                  </tr>
+                </thead>
+                <tbody>
                 {data.map((item, index) => {
                   var newdate = new Date(item.date);
                   return (
-                    <div
-                      className="row mb-1 justify-content-around text"
+                    <tr
+                      className=""
                       key={index}
                     >
-                      <div className="col col-1 mb-2">{index + 1}</div>
-                      <div className="col col-2 mb-2">
+                      <th >{index + 1}</th>
+                      <td className="">
                         {item.firstname + " " + item.lastname}
-                      </div>
-                      <div className="col col-1 mb-2">
+                      </td>
+                      <td className="">
                         {newdate.getDate() +
                           "/" +
                           (newdate.getMonth() + 1) +
                           "/" +
                           newdate.getFullYear()}
-                      </div>
-                      <div className="col col-1 mb-2">
+                      </td>
+                      <td className="">
                         {item.specialisation}
-                      </div>
-                      <div className="col col-2 mb-2">{item.doctor_name}</div>
-                      <div className="col col-2 mb-2">{item.time_slot}</div>
+                      </td>
+                      <td className="">{item.doctor_name}</td>
+                      <td className="">{item.time_slot}</td>
                       {/* {item.status_bit===0?<><p className="col mb-2">Cancelled</p></>
                       :<><div className="col mb-2">
                         <button>Update</button>
@@ -200,17 +204,17 @@ function Your_Appoint() {
                       <div className="col mb-2">
                         <button onClick={()=>{cancelAppoint(item._id)}}>Cancel</button>
                       </div></>} */}
-                      {item.visited_bit === 1?<><p className="col mb-2">Approved</p></>:(item.status_bit !== 0 ? (
+                      {item.visited_bit === 1?<><td className="d-flex justify-content-center">Approved</td></>:(item.status_bit !== 0 ? (
                         item.status_bit === 2 ? (
                           <>
-                            <p className="col mb-2">Rejected</p>
+                            <td className="d-flex justify-content-center">Rejected</td>
                           </>
                         ) : (
-                          <>
-                            <div className="col mb-2">
+                          <td className="d-flex justify-content-evenly">
+                            <span className="">
                               <button
                                 type="button"
-                                class="btn btn-primary"
+                                className="btn btn-primary px-3 py-1"
                                 data-bs-toggle="modal"
                                 data-bs-target={"#exampleModalLabel"+index}
                                 data-bs-whatever="@mdo"
@@ -223,34 +227,34 @@ function Your_Appoint() {
                               </button>
 
                               <div
-                                class="modal fade"
+                                className="modal fade"
                                 id={"exampleModalLabel"+index}
                                 tabindex="-1"
                                 aria-labelledby="exampleModalLabel"
                                 aria-hidden="true"
                               >
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
+                                <div className="modal-dialog">
+                                  <div className="modal-content">
+                                    <div className="modal-header">
                                       <h1
-                                        class="modal-title fs-5"
+                                        className="modal-title fs-5"
                                         id="exampleModalLabel"
                                       >
                                         Update Appointment
                                       </h1>
                                       <button
                                         type="button"
-                                        class="btn-close"
+                                        className="btn-close"
                                         data-bs-dismiss="modal"
                                         aria-label="Close"
                                       ></button>
                                     </div>
-                                    <div class="modal-body">
+                                    <div className="modal-body">
                                       <form onSubmit={handleSubmit}>
-                                        <div class="mb-3">
+                                        <div className="mb-3">
                                           <label
                                             for="recipient-name"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Date:
                                           </label>
@@ -262,10 +266,10 @@ function Your_Appoint() {
                                             maxDate={maxdate}
                                           />
                                         </div>
-                                        <div class="mb-3">
+                                        <div className="mb-4">
                                           <label
                                             for="message-text"
-                                            class="col-form-label"
+                                            className="col-form-label"
                                           >
                                             Timing slot:
                                           </label>
@@ -280,64 +284,69 @@ function Your_Appoint() {
                                             })}
                                           </select>
                                         </div>
-                                        <input
-                                          type="submit"
-                                          value="Update"
-                                          class="btn btn-primary"
-                                        />
+                                        
+                                        <div className="modal-footer d-flex justify-content-center">
+                                        
+                                          <input
+                                              type="submit"
+                                              value="Update"
+                                              className=" btn btn-primary px-4 py-2"
+                                            />
+                                        
+                                        </div>
                                       </form>
                                     </div>
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                            <div className="col mb-2">
+                            </span>
+                            <span className="">
                               <button
                                 type="button"
-                                class="btn btn-primary"
+                                className="btn btn-primary px-3 py-1"
                                 data-bs-toggle="modal"
                                 data-bs-target={"#exampleModal"+index}
                               >
                                 Cancel
                               </button>
                               <div
-                                class="modal fade"
+                                className="modal fade"
                                 id={"exampleModal"+index}
                                 tabindex="-1"
                                 aria-labelledby="exampleModalLabel"
                                 aria-hidden="true"
                               >
-                                <div class="modal-dialog">
-                                  <div class="modal-content">
-                                    <div class="modal-header">
+                                <div className="modal-dialog">
+                                  <div className="modal-content">
+                                    <div className="modal-header">
                                       <h1
-                                        class="modal-title fs-5"
+                                        className="modal-title fs-5"
                                         id="exampleModalLabel"
                                       >
                                         Cancel Appointment
                                       </h1>
                                       <button
                                         type="button"
-                                        class="btn-close"
+                                        className="btn-close"
                                         data-bs-dismiss="modal"
                                         aria-label="Close"
                                       ></button>
                                     </div>
-                                    <div class="modal-body">
+                                    <div className="modal-body">
                                       Are you sure you want to cancel your
                                       appointment?
                                     </div>
-                                    <div class="modal-footer">
+                                    <div className="modal-footer">
                                       <button
                                         type="button"
-                                        class="btn btn-secondary"
+                                        className="btn btn-secondary"
                                         data-bs-dismiss="modal"
                                       >
                                         Close
                                       </button>
                                       <button
                                         type="button"
-                                        class="btn btn-primary"
+                                        className="btn btn-primary"
                                         onClick={() => {
                                           cancelAppoint(item._id);
                                         }}
@@ -348,18 +357,19 @@ function Your_Appoint() {
                                   </div>
                                 </div>
                               </div>
-                            </div>
-                          </>
+                            </span>
+                          </td>
                         )
                       ) : (
                         <>
-                          <p className="col mb-2">Cancelled</p>
+                          <td className="d-flex justify-content-center ">Cancelled</td>
                         </>
                       ))}
-                    </div>
+                    </tr>
                   );
                 })}
-              </>
+                </tbody>
+              </table>
             )}
           </div>
         </div>

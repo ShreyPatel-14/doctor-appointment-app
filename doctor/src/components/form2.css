@@ -1,35 +1,81 @@
-.xyz{
-    width:100%;
-    font-size: medium;
-  }
-  .abc{
-    width:50%;
-  }
 
-  .form-label{
-    font-weight: bold;
+.form2{
+  background-color: #fdfafa;
+}
+.form2 h4{
+  color:rgb(47, 47, 47)
+}
+
+.form2 .input-container {
+    position: relative;
+    width:50vw;
+}
+  
+.form2 .input-container input {
+    font-size: 20px;
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid #a1a1a1;
+    padding: 5px 0;
+    background-color: transparent;
+    outline: none;
   }
   
-  
-  .ptag{
-    margin: 10px;
-    margin-left: 50px;
+  .form2 .input-container .label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #a1a1a1;
+    transition: all 0.3s ease;
+    pointer-events: none;
   }
   
+  .form2 .input-container input:focus ~ .label,
+  .input-container input:valid ~ .label {
+    top: -20px;
+    font-size: 16px;
+    color: #333;
+  }
   
-    .border,
-    select,
-    textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
+  .form2 .input-container .underline {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #333;
+    transform: scaleX(0);
+    transition: all 0.3s ease;
+  }
+  
+  .form2 .input-container input:focus ~ .underline,
+  .form2 .input-container input:valid ~ .underline {
+    transform: scaleX(1);
+   
+  }
+  .form2 select{
+    padding: 5px 10px;
+    border-radius:10px;
+    
+  }
+  .form2 .timing{
+    border-radius: 5px;
+    border-color: #a1a1a1;
+  }
+  .form2 .active{
+    background-color: #333;
+    color:white
+  }
+  @media(max-width:576px)
+  {
+    .form2 .container{
+      margin-top:-20px !important;
     }
-    textarea {
-      resize: vertical;
+    .form2 .input-container{
+      width:90vw;
+      margin:50px 0px;
+    
     }
   
-  .hov:hover{
-    box-shadow: 0 10px 15px -3px rgb(46 41 51 / 8%), 0 4px 6px -2px rgb(71 63 79 / 16%);
   }
+  

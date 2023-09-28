@@ -147,58 +147,62 @@ function Patients() {
   // ]
   return (
     <>
-      <div className='main'>
+      <div className='main5 d-flex-column p-4'>
         <div>
-          <h2 className='animate__animated animate__slideInDown'>Patients</h2>
+          <h2 className='animate__animated animate__slideInDown text-theme'>Patients</h2>
         </div>
-        <div className='column_patients'>
-          <div className='d-flex justify-content-between'>
-            <h2 className='patients'>All Patients</h2>
+        <div className='column_patients justify-content-center mt-4 '>
+          <div className='d-flex justify-content-between mb-2 mx-2'>
+            <h5 className='patients text-theme'>All Patients</h5> 
             <div className='date'><DatePicker onChange={(e) => setdate(new Date(e))} render={<Icon />} /></div>
             {/* to get the selected value from date picker, use usestate just like calendar. */}
           </div>
-          <div className='patients_content'>
+          <div className='patients_content d-flex'>
             {
               totalItems === 0 ?
                 <>
                   <div className='no_appo_text'>There Is No appointments for the date</div>
                 </>
                 :
-                <>
-                  <div className='row mb-1 justify-content-around head'>
-                    <div className='col col-1 mb-3'>Sr. No</div>
-                    <div className='col col-2 mb-3'>Name</div>
-                    <div className='col col-1 mb-3'>Gender</div>
-                    <div className='col col-1 mb-3'>Age</div>
-                    <div className='col col-1 mb-3'>Weight</div>
-                    <div className='col col-2 mb-3'>Contact</div>
-                    <div className='col col-4 mb-3'>Address</div>
-                  </div>
+                <table className='table table-striped'>
+                  <thead>
+                    <tr className=''>
+                      <th className=''>Sr. No</th>
+                      <th className=''>Name</th>
+                      <th className=''>Gender</th>
+                      <th className=''>Age</th>
+                      <th className=''>Weight</th>
+                      <th className=''>Contact</th>
+                      <th className=''>Address</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                   {
                     MAP.slice(((currentPage - 1) * itemsPerPage), (currentPage * itemsPerPage)).map((item, index) => {
                       return (
-                        <div className='row mb-1 justify-content-around text' key={index}>
-                          <div className='col col-1 mb-2'>{item.Sr}</div>
-                          <div className='col col-2 mb-2'>{item.Name}</div>
-                          <div className='col col-1 mb-2'>{item.Gender}</div>
-                          <div className='col col-1 mb-2'>{item.Age}</div>
-                          <div className='col col-1 mb-2'>{item.Weight}</div>
-                          <div className='col col-2 mb-2'>{item.Contact}</div>
-                          <div className='col col-4 mb-2'>
+                        <tr className='' key={index}>
+                          <th className=''>{item.Sr}</th>
+                          <td className=''>{item.Name}</td>
+                          <td className=''>{item.Gender}</td>
+                          <td className=''>{item.Age}</td>
+                          <td className=''>{item.Weight}</td>
+                          <td className=''>{item.Contact}</td>
+                          <td className=''>
                             {displayedAddress === index ? (
-                              <div className='row'>
-                                <div className='col address'>{item.Address}</div>
-                                <i className="col fa-regular fa-circle-xmark close-button"  onClick={hideAddress}></i>
+                              <div className=''>
+                                <div className='address'>{item.Address}</div>
+                                <i className="fa-regular fa-circle-xmark close-button mt-1"  onClick={hideAddress}></i>
                               </div>
                             ) : (
-                              <button className="address-button" onClick={() => showAddress(index)}>Address</button>
+                              <button className="address-btn py-1" onClick={() => showAddress(index)}>Address</button>
                             )}
-                          </div>
-                        </div>
+                          </td>
+                        </tr>
                       )
                     })
                   }
-                </>
+                  </tbody>
+                </table>
             }
           </div>
           <div className='row mb-1 justify-content-around'>

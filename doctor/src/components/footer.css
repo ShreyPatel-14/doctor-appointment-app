@@ -3,11 +3,13 @@
 }
 
 .footer{
-    background-color: #1A5F7A;
+    background-color: #159895;
     padding:0 130px;
     width:100%;
 }
-
+.footer h4{
+    color:white;
+} 
 .sb__footer{
     display:flex;
     flex-direction: column;

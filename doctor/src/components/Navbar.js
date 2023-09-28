@@ -48,29 +48,29 @@ function Navbar() {
             </label>
             <ul>
               <li>
-                <Link to="/" className="remove">
+                <Link to="/" className="remove text-white">
                   Home
                 </Link>
               </li>
               <li>
-                <a href="#about" className="remove">
+                <a href="#about" className="remove text-white">
                   About
                 </a>
               </li>
               <li>
-                <a href="#contact" className="remove">
+                <a href="#contact" className="remove text-white">
                   Contact us
                 </a>
               </li>
               <li>
                 {!localStorage.getItem("swapIcons") ? (
-                  <Link to="/appointment" className="remove">
+                  <Link to="/appointment" className="remove text-white">
                     Appointment
                   </Link>
                 ) : (
                   <div class="dropdown">
                     <a
-                      class="dropdown-toggle"
+                      class="dropdown-toggle text-white"
                       href="#"
                       role="button"
                       id="dropdownMenuLink"
@@ -99,7 +99,7 @@ function Navbar() {
                 )}
               </li>
               <li>
-                <Link to="/blog" className="remove">
+                <Link to="/blog" className="remove text-white">
                   Blog
                 </Link>
               </li>

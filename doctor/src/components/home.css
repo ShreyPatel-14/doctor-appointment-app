@@ -6,6 +6,10 @@
     list-style: none;
     box-sizing: border-box;
 }
+.shadow{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius:5px;
+}
 .title
 {
     display:flex;
@@ -54,7 +58,7 @@
 }
 .title .heading h1 span
 {
-    color:#159895;
+    color:#148e8b;
 }
 .features 
 {
@@ -100,8 +104,8 @@
 {
     padding:10px;
     margin:0 10px 0 0;
-    color:#03362f;
-    background-color: #57C5B6;
+    color:#fff;
+    background-color: #159895;
     border-radius:5px;
 }
 .appointment
@@ -130,7 +134,8 @@
 }
 .options h6
 {
-    color:#159895;
+    color:#148e8b;
+    font-size: 18px;
     font-weight: 700;
 }
 .options h2
@@ -150,8 +155,8 @@
 {
     padding:10px;
     margin:0 10px 0 0;
-    color:#03362f;
-    background-color: #57C5B6;
+    color:#fff;
+    background-color: #159895;
     border-radius:5px;
 }
 .options p
@@ -167,11 +172,11 @@
 .options .booking .book
 {
     border:0;
-    background-color:#57C5B6;
+    background-color:#159895;
     padding:10px 30px;
     font-weight: 600;
     border-radius:5px;
-    outline:3px solid #57C5B6;
+    outline:3px solid #159895;
 }
 .options .booking .book:hover
 {
@@ -183,7 +188,7 @@
 }
 .services .heading span
 {
-    color:#1A5F7A;
+    color:#148e8b;
 }
 .type_cards
 {
@@ -226,7 +231,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    color:#1A5F7A;
+    color:#159895;
 }
 .type_cards .card .icon div:nth-child(1)
 {
@@ -244,7 +249,7 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
-    color:#1A5F7A;
+    color:#159895;
 }
 .type_cards .card .learnMore
 {
@@ -256,11 +261,11 @@
 {
     margin-left: 2%;
     margin-top: 1%;
-    color: #1A5F7A;
+    color: #159895;
 }
 .type_cards .card .learnMore h6
 {
-    color:#1A5F7A;
+    color:#159895;
 }
 .type_cards .card .desc
 {
@@ -294,6 +299,34 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.doctor_card img
+{
+    height:300px;
+    width:100%;
+}
+.doctor_card h5
+{
+    margin:20px 0 0 0;
+    color:#148e8b;
+    font-size: 25px;
+    font-weight:600;
+}
+.doctor_card p
+{
+    color:black;
+    font-size: 20px;
+}
+.doctor_head
+{
+    margin:40px 20px 20px 20px;
+    display:flex;
+    justify-content: center;
+}
+.doctor_head span
+{
+    color:#148e8b;
 }
 @media(max-width:1286px)
 {
@@ -330,33 +363,6 @@
         padding:4% 17%;
     }
 }
-.doctor_card img
-{
-    height:300px;
-    width:100%;
-}
-.doctor_card h5
-{
-    margin:20px 0 0 0;
-    color:#1A5F7A;
-    font-size: 25px;
-    font-weight:600;
-}
-.doctor_card p
-{
-    color:black;
-    font-size: 20px;
-}
-.doctor_head
-{
-    margin:40px 20px 20px 20px;
-    display:flex;
-    justify-content: center;
-}
-.doctor_head span
-{
-    color:#1A5F7A;
-}
 @media(max-width:1207px)
 {
     .features
@@ -377,7 +383,7 @@
     .features
     {
         flex-wrap: wrap;
-        flex-direction: column;
+        flex-direction: column-reverse;
     }
     .appointment
     {

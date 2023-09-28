@@ -47,7 +47,7 @@ function Main() {
     return (
         <>
             {/* <BrowserRouter> */}
-                <div className="cont">
+                <div className="cont d-flex">
                     <div style={{ width: isOpen * isMobile ? "15.625rem" : "3.125rem" }} className="sidebar">
                         <div className="top_section">
                             <img src={img} alt='sorry' className="logo" style={{ display: isOpen * isMobile ? "block" : "none", color: 'white' }}></img>
@@ -56,13 +56,13 @@ function Main() {
                         {
                             list.map((item, index) => {
                                 return (
-                                    <Link to={item.path} key={index} className='link' activeclassName='active' >
+                                    <Link to={item.path} key={index} className='link mb-2 py-2 px-3 mx-2' activeclassName='active' >
                                         <div className="icon">{item.icon}</div>
                                         <div className="link_text" style={{ display: isOpen * isMobile ? "block" : "none" }}>{item.name}</div>
                                     </Link>)
                             })
                         }
-                        <Link to="/" key="3" className='link logout' activeclassName='active' onClick={logout}>
+                        <Link to="/" key="3" className='link logout py-2 px-3 mx-2' activeclassName='active' onClick={logout}>
                             <div className="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
                             <div className="link_text" style={{ display: isOpen * isMobile ? "block" : "none" }}>Logout</div>
                         </Link>

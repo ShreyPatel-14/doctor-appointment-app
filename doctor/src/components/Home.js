@@ -3,7 +3,7 @@ import "./home.css";
 import Doctor_image from "../doctor.webp";
 import Doctor_image2 from "../doctor2.webp";
 import { Link } from "react-router-dom";
-import pic from "./about.jpg";
+import pic from "../assets/about.png";
 import "./about.scss";
 import Main from "../Doctor/Main";
 function Home() {
@@ -11,7 +11,7 @@ function Home() {
     <>
     { localStorage.getItem("is_doctor") ? (
       <>
-      
+      <Main/>
       </>
     ) : (
     <div className="container main-page" data-bs-smooth-scroll="true">
@@ -44,12 +44,12 @@ function Home() {
           </ul>
         </div>
         <div className="image1">
-          <img src={Doctor_image} alt="doctor_image" />
+          <img src={Doctor_image} className="shadow" alt="doctor_image" />
         </div>
       </div>
       <div className="appointment">
         <div className="image2">
-          <img src={Doctor_image2} alt="doctor_image" />
+          <img src={Doctor_image2} className="shadow" alt="doctor_image" />
         </div>
         <div className="options">
           <h6>Quick Solution</h6>
@@ -71,7 +71,7 @@ function Home() {
             </li>
           </ul>
           <div className="booking">
-            <button className="book">Book Appointment</button>
+            <button className="book text-white">Book Appointment</button>
           </div>
         </div>
       </div>
@@ -254,13 +254,13 @@ function Home() {
         </Link>
       </div>
       <div className="about">
-        <div className="d-lg-flex">
-          <div className="mx-3 w-50 content1">
-            <img className="img w-100" src={pic} alt="not found" />
+        <div className="d-lg-flex px-4">
+          <div className=" w-50 content1">
+            <img className="img w-100 shadow" src={pic} alt="not found" />
           </div>
-          <div className="w-50 mx-3 content2" id="about">
+          <div className="w-50 mx-5 content2" id="about">
             <div>
-              <h1>About Us</h1>
+              <h1><span>About</span>Us</h1>
               <p>
                 Welcome to Care & Cure, your trusted partner in simplifying
                 healthcare access through convenient and efficient doctor
@@ -272,8 +272,8 @@ function Home() {
             </div>
           </div>
         </div>
-        <h1 className="d-flex mt-4 justify-content-center" id="contact">
-          Contact Us
+        <h1 className="d-flex mt-5 justify-content-center" id="contact">
+          <span>Contact </span> Us
         </h1>
         <div className="container d-flex justify-content-center">
           <div className="mx-3 w-lg-50 w-md-75 ">

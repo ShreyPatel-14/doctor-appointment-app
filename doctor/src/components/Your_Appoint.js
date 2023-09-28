@@ -210,11 +210,11 @@ function Your_Appoint() {
                             <td className="d-flex justify-content-center">Rejected</td>
                           </>
                         ) : (
-                          <td className="d-flex justify-content-evenly">
+                          <td className="d-flex justify-content-center">
                             <span className="">
                               <button
                                 type="button"
-                                className="btn btn-primary px-3 py-1"
+                                className="btn-update py-1 mx-2"
                                 data-bs-toggle="modal"
                                 data-bs-target={"#exampleModalLabel"+index}
                                 data-bs-whatever="@mdo"
@@ -290,7 +290,7 @@ function Your_Appoint() {
                                           <input
                                               type="submit"
                                               value="Update"
-                                              className=" btn btn-primary px-4 py-2"
+                                              className=" btn-update py-1"
                                             />
                                         
                                         </div>
@@ -303,7 +303,7 @@ function Your_Appoint() {
                             <span className="">
                               <button
                                 type="button"
-                                className="btn btn-primary px-3 py-1"
+                                className="cancel-btn py-1"
                                 data-bs-toggle="modal"
                                 data-bs-target={"#exampleModal"+index}
                               >
@@ -339,14 +339,14 @@ function Your_Appoint() {
                                     <div className="modal-footer">
                                       <button
                                         type="button"
-                                        className="btn btn-secondary"
+                                        className="close-btn py-1"
                                         data-bs-dismiss="modal"
                                       >
                                         Close
                                       </button>
                                       <button
                                         type="button"
-                                        className="btn btn-primary"
+                                        className="cancel-btn py-1"
                                         onClick={() => {
                                           cancelAppoint(item._id);
                                         }}

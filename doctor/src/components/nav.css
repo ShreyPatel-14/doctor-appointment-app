@@ -40,6 +40,10 @@ nav ul li a
     color:black;
     text-decoration: none;
 }
+.bg-theme:hover{
+    background-color: #159895;
+    border-radius: 5px;
+}
 a:hover
 {
     transition:all 0.5s;

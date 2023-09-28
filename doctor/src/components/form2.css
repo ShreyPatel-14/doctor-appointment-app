@@ -66,6 +66,17 @@
     background-color: #333;
     color:white
   }
+  .btn-confirm{
+    background-color: #159895;
+    color: white;
+    border:0;
+    border-radius: 5px !important;
+    text-align: center;
+    outline:1px solid #159895;
+  }
+  .btn-confirm:hover{
+      outline-offset: 4px;
+  }
   @media(max-width:576px)
   {
     .form2 .container{

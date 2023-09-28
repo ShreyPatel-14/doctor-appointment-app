@@ -289,7 +289,7 @@ function Form2() {
 
           <div className="mx-3 mb-3" style={{backgroundColor:"lightgrey",height:"1px",width:"97.5%"}}></div>
           <div className="d-flex justify-content-center ">
-            <input type="submit" value="Confirm Booking" className="btn btn-outline-success mb-4 mx-3 fs-5" />
+            <input type="submit" value="Confirm Booking" className="btn-confirm py-2 px-3 mb-5 fs-5" />
           </div>
 
         </form>

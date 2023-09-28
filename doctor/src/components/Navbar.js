@@ -85,12 +85,12 @@ function Navbar() {
                       aria-labelledby="dropdownMenuLink"
                     >
                       <li>
-                        <Link to="/appointment" className="dropdown-item">
+                        <Link to="/appointment" className="dropdown-item bg-theme">
                           Book Appointment
                         </Link>
                       </li>
                       <li>
-                        <Link to="/yourAppoint" className="dropdown-item">
+                        <Link to="/yourAppoint" className="dropdown-item bg-theme">
                           Your Appointments
                         </Link>
                       </li>

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./nav.css";
 import "../navbar1.css";
 import Logo from "../logo2.jpg";
+import mainlogo from "../logo3.png";
+
 import {
   BrowserRouter as Router,
   Routes,
@@ -20,8 +22,9 @@ import Your_Appoint from "./Your_Appoint";
 import Main from "../Doctor/Main";
 // import axios from "axios";
 function Navbar() {
+  
   const [isopen, setisopen] = useState(false);
-  // const [val, setVal] = useState("");
+  
   const toggle = () => {
     setisopen(!isopen);
   };
@@ -29,14 +32,14 @@ function Navbar() {
     localStorage.clear();
     window.location.reload();
   };
-
+  
   return (
     <div>
       <Router>
         {localStorage.getItem("is_doctor") ? (
-          <>
-          <Main />
-          </>
+          (
+            <Main />
+          )
         ) : (
           <nav>
             <input type="checkbox" id="check" />
@@ -44,7 +47,9 @@ function Navbar() {
               <i className="fa-solid fa-bars"></i>
             </label>
             <label className="logo">
-              <img src={Logo} alt="logo" />
+              <Link to="/">
+              <img src={mainlogo} alt="logo" style={{ height: "40px" }} />
+              </Link>
             </label>
             <ul>
               <li>
@@ -85,12 +90,18 @@ function Navbar() {
                       aria-labelledby="dropdownMenuLink"
                     >
                       <li>
-                        <Link to="/appointment" className="dropdown-item bg-theme">
+                        <Link
+                          to="/appointment"
+                          className="dropdown-item bg-theme"
+                        >
                           Book Appointment
                         </Link>
                       </li>
                       <li>
-                        <Link to="/yourAppoint" className="dropdown-item bg-theme">
+                        <Link
+                          to="/yourAppoint"
+                          className="dropdown-item bg-theme"
+                        >
                           Your Appointments
                         </Link>
                       </li>
@@ -105,7 +116,7 @@ function Navbar() {
               </li>
               <li>
                 {localStorage.getItem("swapIcons") ? (
-                  <Link to="#" className="button" onClick={toggle}>
+                  <Link to="/" className="button" onClick={toggle}>
                     <i class="fa-regular fa-user"></i>
                   </Link>
                 ) : (
@@ -119,15 +130,12 @@ function Navbar() {
               <ul className={`menu-nav ${isopen ? " show-menu" : ""}`}>
                 <div className="items">
                   <div className="profilephoto">
-                    <img src={Logo} alt="" />
+                    <img src={mainlogo} alt="" />
                   </div>
                   <hr />
                   <p>Email: {localStorage.getItem("email")}</p>
                   <hr style={{ color: "black" }} />
-                  <p>Disease</p>
-                  <hr />
-                  <p>Mobile Number</p>
-                  <hr />
+
                   <Link to="/" onClick={logOut}>
                     <p>
                       Logout <i className="fa-solid fa-right-from-bracket"></i>
@@ -154,10 +162,10 @@ function Navbar() {
             <Route path="signin" element={<Signin />} />
             <Route path="signup" element={<Signup />} />
           </Route>
-          
         </Routes>
-      </Router>
+        </Router>
     </div>
+
   );
 }
 

@@ -11,7 +11,7 @@ function Patients() {
   const [date, setdate] = useState(new Date());
   const [displayedAddress, setDisplayedAddress] = useState(null); // Add a new state variable
   const itemsPerPage = 7; // Number of items per page
-  const pageCount = Math.ceil(totalItems / itemsPerPage);// Calculate the total number of pages
+  const pageCount = Math.ceil(totalItems / itemsPerPage); // Calculate the total number of pages
   useEffect(() => {
     const fetchdata = async () => {
       try {

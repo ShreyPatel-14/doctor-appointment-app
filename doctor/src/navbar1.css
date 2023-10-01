@@ -124,9 +124,9 @@ li .button:hover
     margin-top: 60px;
     right: 0;
     width: 0;
-    height:400px;
+    height:220px;
     overflow: hidden;
-    max-width: 290px;
+    max-width: 230px;
     z-index: 9;
     font-size: 15px;
     padding:20px;
@@ -148,7 +148,7 @@ li .button:hover
   } */
 
   .items p{
-    color:black;
+    color:white
    
   }
   .items p:hover{
@@ -157,16 +157,16 @@ li .button:hover
   }
 
   .profilephoto{
-    height: 120px;
+    height: fit-content;
     display: flex;
     justify-content: center;
   }
 
   .profilephoto img{
-    border-radius: 50%;
-    height:120px;
+    
+    height:50px;
     width:120px;
-    border:3px solid #105453;
+    
     
   }
 

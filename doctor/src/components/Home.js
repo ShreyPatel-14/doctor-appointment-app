@@ -2,16 +2,19 @@ import React from "react";
 import "./home.css";
 import Doctor_image from "../doctor.webp";
 import Doctor_image2 from "../doctor2.webp";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import pic from "../assets/about.png";
 import "./about.scss";
 import Main from "../Doctor/Main";
+
+
 function Home() {
+  const navigate=useNavigate()
   return (
     <>
     { localStorage.getItem("is_doctor") ? (
       <>
-      <Main/>
+      
       </>
     ) : (
     <div className="container main-page" data-bs-smooth-scroll="true">
@@ -71,7 +74,9 @@ function Home() {
             </li>
           </ul>
           <div className="booking">
+            <Link to="/appointment">
             <button className="book text-white">Book Appointment</button>
+            </Link>
           </div>
         </div>
       </div>
@@ -214,14 +219,14 @@ function Home() {
           <div className="doctor_card">
             <img src={Doctor_image2} alt="doc_image" />
             <h5>Dr. Dhairya Patel</h5>
-            <p>Family Practice</p>
+            <p>General Practice</p>
           </div>
         </Link>
         <Link to="/" style={{ textDecoration: "none" }}>
           <div className="doctor_card">
             <img src={Doctor_image2} alt="doc_image" />
             <h5>Dr. Jinay Doshi</h5>
-            <p>Gynecologist</p>
+            <p>Dermatologist</p>
           </div>
         </Link>
         <Link to="/" style={{ textDecoration: "none" }}>
@@ -235,21 +240,21 @@ function Home() {
           <div className="doctor_card">
             <img src={Doctor_image2} alt="doc_image" />
             <h5>Dr. Mansi Parmar</h5>
-            <p>General Surgery</p>
+            <p>Orthopedic</p>
           </div>
         </Link>
         <Link to="/" style={{ textDecoration: "none" }}>
           <div className="doctor_card">
             <img src={Doctor_image2} alt="doc_image" />
             <h5>Dr. Henil Patel</h5>
-            <p>Dermatologist</p>
+            <p>Urologist</p>
           </div>
         </Link>
         <Link to="/" style={{ textDecoration: "none" }}>
           <div className="doctor_card">
             <img src={Doctor_image2} alt="doc_image" />
             <h5>Dr. Jayveer Jadeja</h5>
-            <p>Orthopedic</p>
+            <p>Surgeon</p>
           </div>
         </Link>
       </div>

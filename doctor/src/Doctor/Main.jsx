@@ -4,7 +4,7 @@ import Dashboard from './Dashboard';
 import Appointment from './Appointment';
 import Patients from './Patients';
 import './main.scss';
-import img from './logo.jpeg'
+import Logo from '../logo3.png'
 import {
     FaTh,
 } from 'react-icons/fa';
@@ -50,7 +50,9 @@ function Main() {
                 <div className="cont d-flex">
                     <div style={{ width: isOpen * isMobile ? "15.625rem" : "3.125rem" }} className="sidebar">
                         <div className="top_section">
-                            <img src={img} alt='sorry' className="logo" style={{ display: isOpen * isMobile ? "block" : "none", color: 'white' }}></img>
+                            <Link to="/dashboard">
+                            <img src={Logo} alt='sorry' className="logo" style={{ display: isOpen * isMobile ? "block" : "none", color: 'white' }}></img>
+                            </Link>
                             <div style={{ marginLeft: isOpen * isMobile ? "3.125rem" : "0rem" }} className="bars"> <i class={isOpen * isMobile ? "fa-solid fa-angles-left" : "fa-solid fa-angles-right"} onClick={toggle}></i>  </div> {/*  fa-solid fa-list */}
                         </div>
                         {

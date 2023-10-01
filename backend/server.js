@@ -64,7 +64,7 @@ const PatientSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-  contact1: {
+  contact: {
     type: Number,
     required: true,
   },
@@ -154,18 +154,7 @@ const DoctorSchema = new mongoose.Schema({
 const Doctor = mongoose.model("doctor", DoctorSchema);
 Doctor.createIndexes();
 
-const Doc_spec_schema = new mongoose.Schema({
-  doc_id: {
-    type: String,
-    required: true,
-  },
-  spec_id: {
-    type: String,
-    required: true,
-  },
-});
-const Doc_spec = mongoose.model("doc_spec", Doc_spec_schema);
-Doc_spec.createIndexes();
+
 
 const express = require("express");
 const app = express();
@@ -235,7 +224,7 @@ app.post("/appointment", async (req, res) => {
       gender,
       age,
       weight,
-      contact1,
+      contact,
       address,
       date,
       specialisation,
@@ -253,7 +242,7 @@ app.post("/appointment", async (req, res) => {
       gender,
       age,
       weight,
-      contact1,
+      contact,
       address,
       date,
       specialisation,
@@ -380,8 +369,8 @@ app.post("/yourappoints", async (req, res) => {
 app.post("/cancelappoint", async (req, res) => {
   try {
     const { _id } = req.body;
-
-    await Patient.updateOne({ _id }, { $set: { status_bit: 0 } });
+    
+    await Patient.updateOne({ _id:_id }, { $set: { status_bit: 0 } });
     res.status(201).json({ message: "Cancelled successfully." });
   } catch (error) {
     res
@@ -459,7 +448,9 @@ app.post("/appoints_data", async (req, res) => {
     console.log("express-date", date);
     const name = await Patient.find({ date, doctor_id: doc_id });
     console.log('name',name);
-    res.status(201).json({ message: "User signed up successfully.", name: name });
+    res
+      .status(201)
+      .json({ message: "User signed up successfully.", name: name });
   } catch (error) {
     res.status(500).json({ error: "An error occurred." });
   }
@@ -547,6 +538,17 @@ app.post("/change_data_dashboard", async (req, res) => {
     res.status(201).json({ message: "succesfully updates." });
   } catch (error) {
     res.status(500).json({ error: "An error occurred." });
+  }
+});
+app.post("/rejectappoint", async (req, res) => {
+  try {
+    const { _id } = req.body;    
+    await Patient.updateOne({ _id }, { $set: { status_bit: 2 } });
+    res.status(201).json({ message: "Rejected successfully." });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ error: "An error occurred in getting patient data" });
   }
 });
 // const sendData = async () => {

@@ -15,108 +15,134 @@ function Dashboard() {
   const [total,settotal]=useState(0);
   const itemsPerPage = 6; // Number of items per page
   const pageCount = Math.ceil(totalItems / itemsPerPage);// Calculate the total number of pages
-  useEffect(() => {
-    const fetchdata = async () => {
-      try {
-        let response = await fetch("http://localhost:5000/recent_appoints_data", {
-          method: "post",
-          // body: JSON.stringify({ date: date.toISOString().slice(0,10)+"T18:30:00.000+00:00" }),
-          body: JSON.stringify({ date: date,doctor_mail: localStorage.getItem('email')}),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        response = await response.json();
-        let varcancel=0,varapprove=0,varreject=0,i;
-        // console.log(response);
-        for(i=0;i<response.name.length;i++){
-          if(response.name[i].status_bit===0){
-            varcancel+=1;
-          }
-          if(response.name[i].status_bit===1){
-            varapprove+=1;
-          }
-          if(response.name[i].status_bit===2){
-            varreject+=1;
-          }
-        }
-        const map1 = response.name.map((item, index) => {
-          return ({
-            Sr: index + 1,
-            Date: item.date,
-            Time: item.time_slot,
-            Name: item.firstname + " " + item.lastname,
-            Contact: item.contact1,
-            id: item._id,
-            Index: index,
-            Status: item.status_bit,
-            VisitedBit: item.visited_bit
-          })
-        })
-        // console.log(response);
-        setMAP(map1);
-        settotalItems(map1.length);
-        setapprove(varapprove);
-        setcancel(varcancel);
-        setreject(varreject);
-        settotal(varapprove+varcancel+varreject);
-      }
-      catch (error) {
-        console.error("Error Logging In:", error);
-      }
-    }
-    fetchdata();
-  }, [date]);
-
-  const setselectfunction = async (index, patientId) => {
+  const fetchdata = async () => {
     try {
-      const updatedAppointments = [...MAP1];
-      const appointmentIndex = updatedAppointments.findIndex(
-        (item) => item.Index === index
-        
-      );
-        console.log("index",appointmentIndex);
-      if (appointmentIndex !== -1) {
-        const updatedAppointment = { ...updatedAppointments[appointmentIndex] };
-        updatedAppointment.Status =
-          updatedAppointment.Status === 1 ? 2 : 1;
-        console.log("appointmnet",updatedAppointment.Date,"status",updatedAppointment.Status,"Visted",updatedAppointment.VisitedBit)
-       
-        if (updatedAppointment.VisitedBit === 0 && new Date(updatedAppointment.Date)>new Date()) {
-          updatedAppointments[appointmentIndex] = updatedAppointment;
-          setMAP(updatedAppointments);
+      let response = await fetch("http://localhost:5000/recent_appoints_data", {
+        method: "post",
+        // body: JSON.stringify({ date: date.toISOString().slice(0,10)+"T18:30:00.000+00:00" }),
+        body: JSON.stringify({ date: date,doctor_mail: localStorage.getItem('email')}),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-          const response = await fetch("http://localhost:5000/change_data_dashboard", {
-            method: "post",
-            body: JSON.stringify({
-              s_bit: updatedAppointment.Status,
-              p_id: patientId,
-              date: updatedAppointment.Date,
-              
-              // date: date
-            }),
-            headers: {
-              "Content-Type": "application/json",
-            },
-          });
-
-          if (!response.ok) {
-            console.error("Error while updating data");
-          }
+      response = await response.json();
+      let varcancel=0,varapprove=0,varreject=0,i;
+      // console.log(response);
+      for(i=0;i<response.name.length;i++){
+        if(response.name[i].status_bit===0){
+          varcancel+=1;
         }
-        else if(new Date(updatedAppointment.Date)<new Date()){
-          alert("You Can't Change the Status for Past Dates");
+        if(response.name[i].status_bit===1){
+          varapprove+=1;
         }
-        else if(updatedAppointment.VisitedBit === 1){
-          alert("You Can't Change the Status of Visited Patient");
+        if(response.name[i].status_bit===2){
+          varreject+=1;
         }
       }
+      const map1 = response.name.map((item, index) => {
+        return ({
+          Sr: index + 1,
+          Date: item.date,
+          Time: item.time_slot,
+          Name: item.firstname + " " + item.lastname,
+          Contact: item.contact,
+          id: item._id,
+          Index: index,
+          Status: item.status_bit,
+          VisitedBit: item.visited_bit
+        })
+      })
+      // console.log(response);
+      setMAP(map1);
+      settotalItems(map1.length);
+      setapprove(varapprove);
+      setcancel(varcancel);
+      setreject(varreject);
+      settotal(varapprove+varcancel+varreject);
     }
     catch (error) {
       console.error("Error Logging In:", error);
     }
   }
+  useEffect(() => {
+    fetchdata();
+  }, [date]);
+
+  // const setselectfunction = async (index, patientId) => {
+  //   try {
+  //     const updatedAppointments = [...MAP1];
+  //     const appointmentIndex = updatedAppointments.findIndex(
+  //       (item) => item.Index === index
+        
+  //     );
+  //       console.log("index",appointmentIndex);
+  //     if (appointmentIndex !== -1) {
+  //       const updatedAppointment = { ...updatedAppointments[appointmentIndex] };
+  //       updatedAppointment.Status =
+  //         updatedAppointment.Status === 1 ? 2 : 1;
+  //       console.log("appointmnet",updatedAppointment.Date,"status",updatedAppointment.Status,"Visted",updatedAppointment.VisitedBit)
+       
+  //       if (updatedAppointment.VisitedBit === 0 && new Date(updatedAppointment.Date)>new Date()) {
+  //         updatedAppointments[appointmentIndex] = updatedAppointment;
+  //         setMAP(updatedAppointments);
+
+  //         const response = await fetch("http://localhost:5000/change_data_dashboard", {
+  //           method: "post",
+  //           body: JSON.stringify({
+  //             s_bit: updatedAppointment.Status,
+  //             p_id: patientId,
+  //             date: updatedAppointment.Date,
+              
+  //             // date: date
+  //           }),
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //         });
+
+
+  //         if (!response.ok) {
+  //           console.error("Error while updating data");
+  //         }
+  //       }
+  //       else if(new Date(updatedAppointment.Date)<new Date()){
+  //         alert("You Can't Change the Status for Past Dates");
+  //       }
+  //       else if(updatedAppointment.VisitedBit === 1){
+  //         alert("You Can't Change the Status of Visited Patient");
+  //       }
+  //     }
+  //   }
+  //   catch (error) {
+  //     console.error("Error Logging In:", error);
+  //   }
+  // }
+  const rejectAppoint = async (appoint_id) => {
+    console.log(appoint_id.toString());
+    try {
+      let result = await fetch("http://localhost:5000/rejectappoint", {
+        method: "post",
+        body: JSON.stringify({
+          _id: appoint_id,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      result = await result.json();
+      if (result.error) {
+        console.log(result.error);
+      } else if (result.message) {
+        console.log(result.message);
+        fetchdata();
+      }
+      console.warn(result);
+    } catch (error) {
+      console.error("Error:", error);
+    }
+    window.location.reload();
+  };
   const handlePageClick = (selectedPage) => {
     setCurrentPage(selectedPage.selected + 1);
     // Fetch and update data for the new page
@@ -254,7 +280,7 @@ function Dashboard() {
                           <td >{item.Time}</td>
                           <td >{item.Name}</td>
                           <td >{item.Contact}</td>
-                          <td >
+                          {/* <td >
                             {
                               item.Status === 0 ?
                                 <button className="cancel-btn py-1" key={index} disabled>
@@ -265,10 +291,99 @@ function Dashboard() {
                                 className={item.Status === 2 ? 'py-1 rejected-btn' : 'py-1 py-1 approve-btn'} key={index}
                                   onClick={() => setselectfunction(item.Index, item.id)}
                                 >
-                                  {item.Status === 1 ? "Approverd" : "Rejected"}
+                                  {item.Status === 1 ? "Approved" : "Rejected"}
                                 </button>
                             }
 
+                          </td> */}
+                          <td>
+                          {item.VisitedBit === 1?<><td className="d-flex justify-content-center">Approved</td></>:(item.Status !== 0 ? (
+                        item.Status === 2 ? (
+                          <>
+                            <td className="d-flex justify-content-center">Rejected</td>
+                          </>
+                        ) : (
+                          <td className="d-flex justify-content-center">
+                            
+                              
+                            <span className="">
+                              <button
+                                type="button"
+                                className="cancel-btn py-1"
+                                data-bs-toggle="modal"
+                                data-bs-target={"#exampleModal"+index}
+                                style={{backgroundColor: '#e04646',
+                                  color: 'white',
+                                  border:0,
+                                  borderRadius: '5px !important',
+                                  textAlign: 'center',
+                                  width:'100px',
+                                  outline:'1px solid #de5252'}}
+                              >
+                                Reject
+                              </button>
+                              <div
+                                className="modal fade"
+                                id={"exampleModal"+index}
+                                tabindex="-1"
+                                aria-labelledby="exampleModalLabel"
+                                aria-hidden="true"
+                              >
+                                <div className="modal-dialog">
+                                  <div className="modal-content">
+                                    <div className="modal-header">
+                                      <h1
+                                        className="modal-title fs-5"
+                                        id="exampleModalLabel"
+                                      >
+                                        Reject Appointment
+                                      </h1>
+                                      <button
+                                        type="button"
+                                        className="btn-close"
+                                        data-bs-dismiss="modal"
+                                        aria-label="Close"
+                                      ></button>
+                                    </div>
+                                    <div className="modal-body">
+                                      Are you sure you want to reject this
+                                      appointment?
+                                    </div>
+                                    <div className="modal-footer">
+                                    <button
+                                        type="button"
+                                        className="close-btn py-1"
+                                        data-bs-dismiss="modal"
+                                      >
+                                        Close
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="cancel-btn py-1"
+                                        style={{backgroundColor: '#e04646',
+                                  color: 'white',
+                                  border:0,
+                                  borderRadius: '5px !important',
+                                  textAlign: 'center',
+                                  width:'100px',
+                                  outline:'1px solid #de5252'}}
+                                          onClick={() => rejectAppoint(item.id)}
+                                        
+                                      >
+                                        Reject
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </span>
+                          </td>
+                        )
+                      ) : (
+                        <>
+                          <td className="d-flex justify-content-center">Cancelled</td>
+                        </>
+                      ))}
                           </td>
                         </tr>
                       )

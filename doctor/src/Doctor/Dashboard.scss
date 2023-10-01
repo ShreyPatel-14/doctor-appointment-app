@@ -349,3 +349,27 @@
         }
     }
 }
+.cancel-btn{
+    background-color: #e04646;
+    color: white;
+    border:0;
+    border-radius: 5px !important;
+    text-align: center;
+    width: 70px;
+    outline:1px solid #de5252;
+}
+.cancel-btn:hover{
+    outline-offset: 4px;
+}
+.close-btn{
+    background-color:#9a9a9ad4;
+    color: white;
+    border:0;
+    border-radius: 5px !important;
+    text-align: center;
+    width: 70px;
+    outline:1px solid #9a9a9ad4;
+}
+.close-btn:hover{
+    outline-offset: 4px;
+}

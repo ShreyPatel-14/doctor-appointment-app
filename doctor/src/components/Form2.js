@@ -18,13 +18,14 @@ function Form2() {
   mindate.setDate(currentdate.getDate() + 1);
   var maxdate = new Date();
   maxdate.setDate(currentdate.getDate() + 30);
+  const [btncolor,setBtncolor]=useState(null);
   var disesase = [
     "General",
-    "Cardiovascular",
+    "Cardiologist",
     "Urologist",
     "Orthopedic",
     "Dermatologist",
-    "Surgical",
+    "Surgeon",
   ];
   // var doctor = [
   //   "Dr Dhairya Patel",
@@ -43,7 +44,7 @@ function Form2() {
   //   Surgical: "Dr Jayveersinh Jadeja",
   // };
   const getvalue2 = async (e) => {
-    const selectedDate = e;
+    const selectedDate = new Date(e);
     setDate(selectedDate);
     console.log('date selected is',selectedDate)
     setDateflag(true);
@@ -81,9 +82,12 @@ function Form2() {
     }
   };
   function handleInput(e) {
+    e.preventDefault()
     const name = e.target.name;
     const value = e.target.value;
+    
     setUser({ ...user, [name]: value });
+    console.log(user)
   }
   const getValue = async (e) => {
     try {
@@ -138,9 +142,6 @@ function Form2() {
       navigate("/yourAppoint");
     }
     console.warn(result);
-    if (result) {
-      setUser({});
-    }
   };
   return (
   <body className="form2">
@@ -273,15 +274,21 @@ function Form2() {
               <div className="col-lg-6 px-3 mb-3">
               <div >
                 <h4 className="mb-3">Timing Slots</h4>
-                {/* <button className="timing px-3 btn btn-outline-secondary">4:00 pm to 5:00 pm</button> */}
-                {/* <select  name="time_slot" >
-                  <option selected disabled hidden>
-                    Choose timing slots
-                  </option> */}<div className="d-flex flex-wrap">
-                  {timinglist.map((item) => {
-                    return <button className="timing px-4 m-2 btn btn-outline-secondary">{item}</button>;
-                  })}</div>
-                {/* </select> */}
+                <div className="d-flex flex-wrap mb-3">
+                      {timinglist.map((item) => {
+                        return (
+                          <button
+                            className="timing px-4 m-2 btn btn-outline-secondary"
+                            name="time_slot"
+                            value={item}
+                            onClick={handleInput}
+                          >
+                            {item}
+                          </button>
+                        );
+                      })}
+                    </div>
+                {user.time_slot && <h5 className="mb-3">Selected Time slot: {user.time_slot}</h5>}
               </div>
             </div>
             ) : ( "" )}

@@ -28,9 +28,28 @@ function Navbar() {
   const toggle = () => {
     setisopen(!isopen);
   };
-  const logOut = () => {
-    localStorage.clear();
-    window.location.reload();
+  const logOut = async () => {
+
+    try {
+      let result = await fetch("http://localhost:8000/api/users/logout/", {
+        method: "post",
+        body: JSON.stringify({email:localStorage.getItem("email")}),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      result = await result.json();
+      if (result.error) {
+        console.error(result.error);
+      }
+      else if(result.message){
+        console.log(result.message);
+        localStorage.clear();
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error("Error logging in:", error);
+    }
   };
   
   return (
@@ -116,9 +135,9 @@ function Navbar() {
               </li>
               <li>
                 {localStorage.getItem("swapIcons") ? (
-                  <Link to="/" className="button" onClick={toggle}>
-                    <i class="fa-regular fa-user"></i>
-                  </Link>
+                  <div  onClick={toggle}>
+                    <i className="fa-regular fa-user userIcon"></i>
+                  </div>
                 ) : (
                   <Link to="/login" className="button">
                     Signin

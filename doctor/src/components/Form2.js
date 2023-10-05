@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./form2.css";
+import {format} from 'date-fns';
 import { useNavigate } from "react-router-dom";
 import Calendar from "react-calendar";
 import "./calendar2.css";
@@ -50,11 +51,11 @@ function Form2() {
     setDateflag(true);
     try { 
       setSlot(e);
-      let result = await fetch("http://localhost:5000/specialisation", {
+      let result = await fetch("http://localhost:8000/api/users/specialisation/", {
         method: "post",
         body: JSON.stringify({
           specialisation: dis,
-          selected_date: selectedDate.toLocaleDateString(),
+          selected_date: format(selectedDate, 'yyyy-MM-dd'),
         }),
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +74,7 @@ function Form2() {
           doctor_id: result.doct_id,
           patient_id: localStorage.getItem("Id"),
           status_bit: 1,
-          date: selectedDate,
+          date: format(selectedDate, 'yyyy-MM-dd'),
         });
       }
       console.warn(result);
@@ -87,7 +88,6 @@ function Form2() {
     const value = e.target.value;
     
     setUser({ ...user, [name]: value });
-    console.log(user)
   }
   const getValue = async (e) => {
     try {
@@ -95,11 +95,11 @@ function Form2() {
       setDis(selectedDisease);
       setSlot(e.target.value);
       setSlotflag(true);
-      let result = await fetch("http://localhost:5000/specialisation", {
+      let result = await fetch("http://localhost:8000/api/users/specialisation/", {
         method: "post",
         body: JSON.stringify({
           specialisation: selectedDisease,
-          selected_date: date.toLocaleDateString(),
+          selected_date: format(date, 'yyyy-MM-dd'),
         }),
         headers: {
           "Content-Type": "application/json",
@@ -118,7 +118,7 @@ function Form2() {
           doctor_id: result.doct_id,
           patient_id: localStorage.getItem("Id"),
           status_bit: 1,
-          date: date.toLocaleDateString(),
+          date: format(date, 'yyyy-MM-dd'),
           visited_bit: 0,
           user_mail: localStorage.getItem("email"),
         });
@@ -128,11 +128,12 @@ function Form2() {
       console.error("Error logging in:", error);
     }
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    let result = await fetch("http://localhost:5000/appointment", {
+    let result = await fetch("http://localhost:8000/api/users/appointment/", {
       method: "post",
-      body: JSON.stringify(user),
+      body: JSON.stringify({...user,['email']:localStorage.getItem('email')}),
       headers: {
         "Content-Type": "application/json",
       },

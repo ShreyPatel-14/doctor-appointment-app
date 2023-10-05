@@ -21,7 +21,7 @@ function Signin(props) {
   const getData = async (e) => {
     e.preventDefault();
     try {
-      let result = await fetch("http://localhost:5000/login", {
+      let result = await fetch("http://localhost:8000/api/users/login/", {
         method: "post",
         body: JSON.stringify(user),
         headers: {
@@ -29,13 +29,15 @@ function Signin(props) {
         },
       });
       result = await result.json();
-      if (result.mail) {
-        setMail(result.mail);
+      if (result.error_mail) {
+        setMail(result.error_mail);
         setPass("");
-      } else if (result.pass) {
-        setPass(result.pass);
+      }
+      else if(result.error_password){
+        setPass(result.error_password);
         setMail("");
-      } else if (result.message) {
+      }
+       else if (result.message) {
         setMail("");
         setPass("");
         if (result.isdoctor) {

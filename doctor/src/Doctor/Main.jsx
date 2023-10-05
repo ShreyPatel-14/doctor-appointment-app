@@ -38,12 +38,30 @@ function Main() {
             icon: <i class="fa-solid fa-hospital-user"></i>
         }
     ]
-    function logout()
-    {
-        localStorage.clear()
-        navigate("/")
-        window.location.reload()
-    }
+    const logOut = async () => {
+
+        try {
+          let result = await fetch("http://localhost:8000/api/users/logout/", {
+            method: "post",
+            body: JSON.stringify({email:localStorage.getItem("email")}),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          });
+          result = await result.json();
+          if (result.error) {
+            console.error(result.error);
+          }
+          else if(result.message){
+            console.log(result.message);
+            localStorage.clear()
+            navigate("/")
+            window.location.reload()
+          }
+        } catch (error) {
+          console.error("Error logging in:", error);
+        }
+      };
     return (
         <>
             {/* <BrowserRouter> */}
@@ -64,7 +82,7 @@ function Main() {
                                     </Link>)
                             })
                         }
-                        <Link to="/" key="3" className='link logout py-2 px-3 mx-2' activeclassName='active' onClick={logout}>
+                        <Link to="/" key="3" className='link logout py-2 px-3 mx-2' activeclassName='active' onClick={logOut}>
                             <div className="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
                             <div className="link_text" style={{ display: isOpen * isMobile ? "block" : "none" }}>Logout</div>
                         </Link>
@@ -74,6 +92,8 @@ function Main() {
                             <Route path="/dashboard" element={<Dashboard />}></Route>
                             <Route path="/appointment_1" element={<Appointment />}></Route>
                             <Route path="/patients" element={<Patients />}></Route>
+                            <Route path="/" element={<Dashboard />}></Route>
+                
                         </Routes>
                     </div>
                 </div>

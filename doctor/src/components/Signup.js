@@ -6,7 +6,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import LockIcon from "@mui/icons-material/Lock";
 import EmailIcon from "@mui/icons-material/Email";
 import Alert from "@mui/material/Alert";
-
+import axios from 'axios'
 function Signup() {
   const navigate = useNavigate();
   const [user, setUser] = useState({});
@@ -33,16 +33,17 @@ function Signup() {
     } else {
       setMail("");
       setPass("");
-      let result = await fetch("http://localhost:5000/register", {
+      let result = await fetch("http://localhost:8000/api/users/register/", {
         method: "post",
         body: JSON.stringify(user),
         headers: {
-          "Content-Type": "application/json",
+          "content-type": "application/json",
         },
       });
       result = await result.json();
-      if (result.error) {
-        setMail("Email id is aldready registered");
+      console.log(result);
+      if (result.detail) {
+        setPass(result.detail);
       } else if (result.message) {
         navigate("/login/signin");
       }

@@ -85,6 +85,20 @@ li .button:hover
     color:white;
     transition:all 0.5s;
 }
+li .userIcon
+{
+    padding:10px 13px;
+    background-color: white;
+    border-radius:5px;
+    height: fit-content;
+    width: fit-content;
+}
+li .userIcon:hover
+{
+    background-color: rgb(5, 100, 99);
+    color:white;
+    transition:all 0.5s;
+}
 #check
 {
     display:none;

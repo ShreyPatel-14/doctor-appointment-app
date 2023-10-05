@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Patients.scss';
 import ReactPaginate from 'react-paginate';
 import './PaginationStyle.css';
+import { format } from "date-fns";
 import DatePicker from "react-multi-date-picker";
 import Icon from "react-multi-date-picker/components/icon";
 function Patients() {
@@ -15,24 +16,23 @@ function Patients() {
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        let response = await fetch("http://localhost:5000/appoints_data", {
+        let response = await fetch("http://localhost:8000/api/doctors/appoints_data/", {
           method: "post",
-          body: JSON.stringify({ date: date.toDateString(),doctor_mail:localStorage.getItem('email') }),
+          body: JSON.stringify({ date:format(date, "yyyy-MM-dd"),doctor_mail:localStorage.getItem('email') }),
           headers: {
             "Content-Type": "application/json",
           },
         });
-
         response = await response.json();
-        // console.log(response);
-        const MAP1 = response.name.map((item, index) => {
+        if (response.message){
+        const MAP1 = response.appoint.map((item, index) => {
           return ({
             Sr: index + 1,
             Name: item.firstname + " " + item.lastname,
             Gender: item.gender,
             Age: item.age,
             Weight: item.weight,
-            Contact: item.contact1,
+            Contact: item.contact,
             Address: item.address,
           })
         })
@@ -40,6 +40,10 @@ function Patients() {
         setMAP(MAP1);
         settotalItems(MAP1.length);
       }
+      else{
+        console.error("error while fetching data")
+      }
+    }
       catch (error) {
         console.error("Error Logging In:", error);
       }
@@ -59,97 +63,11 @@ function Patients() {
   const hideAddress = () => {
     setDisplayedAddress(null);
   };
-  // const MAP = [{
-  //   Sr: 1,
-  //   Name: 'Dhairya Patel',
-  //   Gender: 'Male',
-  //   Age: 19,
-  //   Weight: 48.3,
-  //   Contact: 1234567890,
-  //   Address: '54 Alok Tenament-2, Near Karnvati chokdi, takshila school road, vastral'
-  // },
-  // {
-  //   Sr: 2,
-  //   Name: 'Dhairya Patel',
-  //   Gender: 'Male',
-  //   Age: 19,
-  //   Weight: 48.3,
-  //   Contact: 1234567890,
-  //   Address: '54 Alok Tenament-2, Near Karnvati chokdi, takshila school road, vastral'
-  // },
-  // {
-  //   Sr: 3,
-  //   Name: 'Dhairya Patel',
-  //   Gender: 'Male',
-  //   Age: 19,
-  //   Weight: 48.3,
-  //   Contact: 1234567890,
-  //   Address: '54 Alok Tenament-2, Near Karnvati chokdi, takshila school road, vastral'
-  // }, {
-  //   Sr: 4,
-  //   Name: 'Dhairya Patel',
-  //   Gender: 'Male',
-  //   Age: 19,
-  //   Weight: 48.3,
-  //   Contact: 1234567890,
-  //   Address: '54 Alok Tenament-2, Near Karnvati chokdi, takshila school road, vastral'
-  // }, {
-  //   Sr: 5,
-  //   Name: 'Dhairya Patel',
-  //   Gender: 'Male',
-  //   Age: 19,
-  //   Weight: 48.3,
-  //   Contact: 1234567890,
-  //   Address: '54 Alok Tenament-2, Near Karnvati chokdi, takshila school road, vastral'
-  // }, {
-  //   Sr: 6,
-  //   Name: 'Dhairya Patel',
-  //   Gender: 'Male',
-  //   Age: 19,
-  //   Weight: 48.3,
-  //   Contact: 1234567890,
-  //   Address: '54 Alok Tenament-2, Near Karnvati chokdi, takshila school road, vastral'
-  // }, {
-  //   Sr: 7,
-  //   Name: 'Dhairya Patel',
-  //   Gender: 'Male',
-  //   Age: 19,
-  //   Weight: 48.3,
-  //   Contact: 1234567890,
-  //   Address: '54 Alok Tenament-2, Near Karnvati chokdi, takshila school road, vastral'
-  // }, {
-  //   Sr: 8,
-  //   Name: 'Dhairya Patel',
-  //   Gender: 'Male',
-  //   Age: 19,
-  //   Weight: 48.3,
-  //   Contact: 1234567890,
-  //   Address: '54 Alok Tenament-2, Near Karnvati chokdi, takshila school road, vastral',
-  // },
-  // {
-  //   Sr: 9,
-  //   Name: 'Dhairya Patel',
-  //   Gender: 'Male',
-  //   Age: 19,
-  //   Weight: 48.3,
-  //   Contact: 1234567890,
-  //   Address: '54 Alok Tenament-2, Near Karnvati chokdi, takshila school road, vastral'
-  // },
-  // {
-  //   Sr: 10,
-  //   Name: 'Dhairya Patel',
-  //   Gender: 'Male',
-  //   Age: 19,
-  //   Weight: 48.3,
-  //   Contact: 1234567890,
-  //   Address: '54 Alok Tenament-2, Near Karnvati chokdi, takshila school road, vastral',
-  // }
-  // ]
   return (
     <>
       <div className='main5 d-flex-column p-4'>
         <div>
-          <h2 className='animate__animated animate__slideInDown text-theme'>Patients</h2>
+          <h2 className='animate_animated animate_slideInDown text-theme'>Patients</h2>
         </div>
         <div className='column_patients justify-content-center mt-4 '>
           <div className='d-flex justify-content-between mb-2 mx-2'>
@@ -231,4 +149,3 @@ function Patients() {
 }
 
 export default Patients
-

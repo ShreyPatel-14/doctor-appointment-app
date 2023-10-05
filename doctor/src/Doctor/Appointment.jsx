@@ -3,6 +3,7 @@ import './Appointment.scss'
 import ReactPaginate from 'react-paginate';
 import './PaginationStyle.css';
 import Calendar from 'react-calendar';
+import { format } from "date-fns";
 import './calendar.css';
 function Appointment() {
   const [totalItems, settotalItems] = useState(0); // Total number of items
@@ -13,63 +14,64 @@ function Appointment() {
   const itemsPerPage = 7; // Number of items per page
   const pageCount = Math.ceil(totalItems / itemsPerPage);// Calculate the total number of pages
 
-  useEffect(() => {
-    const fetchdata_initial = async () => {
-      try {
-        let response = await fetch("http://localhost:5000/appoints_data", {
-          method: "post",
-          body: JSON.stringify({ date: date.toDateString(),doctor_mail:localStorage.getItem("email")  }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        if (response.ok) {
-          response = await response.json();
+  // useEffect(() => {
+  //   const fetchdata_initial = async () => {
+  //     try {
+  //       let response = await fetch("http://localhost:8000/api/doctors/appoints_data/", {
+  //         method: "post",
+  //         body: JSON.stringify({ date: format(date, "yyyy-MM-dd"), doctor_mail:localStorage.getItem("email")  }),
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //       });
+  //       if (response.message) {
+  //         response = await response.json();
 
-          const MAP1 = response.name.map((item, index) => {
-            return ({
-              Name: item.firstname + " " + item.lastname,
-              Schedule: item.time_slot,
-              VisitedBit: item.visited_bit,
-              id: item._id,
-              Index: index,
-              Status: item.status_bit,
-              Date: item.date
-            })
-          })
-          setMAP(MAP1);
-          settotalItems(MAP1.length);
-        }
-        else {
-          console.error("Error while fetching data");
-        }
-      }
-      catch (error) {
-        console.error("Error Logging In:", error);
-      }
-    }
-    fetchdata_initial();
-  }, []);
+  //         const MAP1 = response.appoint.map((item, index) => {
+  //           return ({
+  //             Name: item.firstname + " " + item.lastname,
+  //             Schedule: item.time_slot,
+  //             VisitedBit: item.visited_bit,
+  //             id: item.id,
+  //             Index: index,
+  //             Status: item.status_bit,
+  //             Date: item.date
+  //           })
+  //         })
+  //         setMAP(MAP1);
+  //         settotalItems(MAP1.length);
+  //       }
+  //       else {
+  //         console.error("Error while fetching data");
+  //       }
+  //     }
+  //     catch (error) {
+  //       console.error("Error Logging In:", error);
+  //     }
+  //   }
+  //   fetchdata_initial();
+  // }, []);
 
   useEffect(() => {
     const fetchdata = async () => {
       try {
-        let response = await fetch("http://localhost:5000/appoints_data", {
+        let result = await fetch("http://localhost:8000/api/doctors/appoints_data/", {
           method: "post",
-          body: JSON.stringify({ date: date,doctor_mail:localStorage.getItem("email") }),
+          body: JSON.stringify({ date: format(date, "yyyy-MM-dd"),doctor_mail:localStorage.getItem("email") }),
           headers: {
-            "Content-Type": "application/json",
+            "content-type": "application/json",
           },
         });
-        if (response.ok) {
-          response = await response.json();
-
-          const MAP1 = response.name.map((item, index) => {
+        result=await result.json()
+        if (result.message) {
+          
+          console.log(result.message)
+          const MAP1 = result.appoint.map((item, index) => {
             return ({
               Name: item.firstname + " " + item.lastname,
               Schedule: item.time_slot,
               VisitedBit: item.visited_bit,
-              id: item._id,
+              id: item.id,
               Index: index,
               Status: item.status_bit,
               Date: item.date
@@ -105,21 +107,21 @@ function Appointment() {
           updatedAppointments[appointmentIndex] = updatedAppointment;
           setMAP(updatedAppointments);
 
-          const response = await fetch("http://localhost:5000/change_data", {
+          const response = await fetch("http://localhost:8000/api/doctors/change_data/", {
             method: "post",
             body: JSON.stringify({
               v_bit: updatedAppointment.VisitedBit,
               p_id: patientId,
-              date: date,
-              doctor_mail:localStorage.getItem("email")
+              // date: format(date, "yyyy-MM-dd"),
+              // doctor_mail:localStorage.getItem("email")
             }),
             headers: {
-              "Content-Type": "application/json",
+              "content-type": "application/json",
             },
           });
-
-          if (!response.ok) {
-            console.error("Error while updating data");
+          if(response.message)
+          {
+            console.log('updated successfully')
           }
         }
         else if(updatedAppointment.VisitedBit===1){
@@ -141,32 +143,7 @@ function Appointment() {
     // Fetch and update data for the new page
     // You would typically have an array of items and slice it to get the current page's items.
   };
-  // const hoverStyle = (s_bit,index) =>{
-  //   const elements = document.getElementsByClassName("box_cr");
 
-  //   if (index >= 0 && index < elements.length) {
-  //     elements[index].style.backgroundColor = "white";
-  //     elements[index].style.color = s_bit===0?"#F1526E":"#FF7777";
-  //   }
-  //   // const style={
-  //   //   backgroundColor:"white",
-  //   //   color:s_bit===0?"#F1526E":"#FF7777"
-  //   // }
-  //   // setmyStyle(style);
-  // }
-  // const WhoverStyle = (s_bit,index) =>{
-  //   const elements = document.getElementsByClassName("box_cr");
-
-  // if (index >= 0 && index < elements.length) {
-  //   elements[index].style.backgroundColor = s_bit === 0 ? "#F1526E" : "#FF7777";
-  //   elements[index].style.color = "white";
-  // }
-  //   // const style={
-  //   //   backgroundColor:s_bit===0?"#F1526E":"#FF7777",
-  //   //   color:"white"
-  //   // }
-  //   // setmyStyle(style);
-  // }
   return (
     <>
       <div className='main2 p-4'>

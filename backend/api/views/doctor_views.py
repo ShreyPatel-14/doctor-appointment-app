@@ -1,3 +1,5 @@
+# Django Import 
+from django.db.models import Q
 from datetime import datetime
 from django.shortcuts import render
 from django.http import JsonResponse
@@ -11,40 +13,12 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.serializers import Serializer
 from django.contrib.auth.hashers import check_password
-from datetime import time
+
 # Local Import 
 from api.models import *
 from api.serializers import *
 
 
-
-@api_view(['POST'])
-def Doctor_appointment(request):
-    try:
-        data=request.data
-        user_1=Doctor.objects.filter(email=data['doctor_mail'])
-
-        appoints=Appointment.objects.filter(doctor=user_1[0],date=data['date'])
-        appoint=AppointmentSerializer(appoints,many=True)
-        return Response({"message":"doctor data found succesfully","appoint":appoint.data})
-    except Exception as e:
-        message = {"error": str(e)}
-        return Response(message, status=status.HTTP_400_BAD_REQUEST)
-    
-@api_view(['POST'])
-def Change_data(request):
-    try:
-        data=request.data
-        print(data)
-        
-        appoint=Appointment.objects.get(id=data['p_id'])
-        appoint.visited_bit=data['v_bit']
-        appoint.save()
-        return Response({"message":"slots find succesfully"})
-    except Exception as e:
-        message = {"error": str(e)}
-        return Response(message, status=status.HTTP_400_BAD_REQUEST)
-    
 @api_view(['POST'])
 def dashboard(request):
     try:
@@ -58,4 +32,44 @@ def dashboard(request):
     except Exception as e:
         message = {"error": str(e)}
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['POST'])
+def Doctor_appointment(request):
+    try:
+        data=request.data
+        user_1=Doctor.objects.filter(email=data['doctor_mail'])
+        appoints=Appointment.objects.filter(doctor=user_1[0],date=data['date'])
+        appoint=AppointmentSerializer(appoints,many=True)
+        return Response({"message":"doctor data found succesfully","appoint":appoint.data})
+    except Exception as e:
+        message = {"error": str(e)}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['POST'])
+def Change_data(request):
+    try:
+        data=request.data
+        appoint=Appointment.objects.get(id=data['p_id'])
+        appoint.visited_bit=data['v_bit']
+        appoint.save()
+        return Response({"message":"slots find succesfully"})
+    except Exception as e:
+        message = {"error": str(e)}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+    
+@api_view(['POST'])
+def Reject_App(request):
+    try:
+        data=request.data
+        appoint=Appointment.objects.get(id=data['_id'])
+        appoint.status_bit=2
+        appoint.save()
+        return Response({"message":"succesfully got data"})
+    except Exception as e:
+        message = {"error": str(e)}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)
         
+    
+    
+
+

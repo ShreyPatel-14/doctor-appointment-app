@@ -46,13 +46,13 @@ function Signin(props) {
           localStorage.setItem("email", result.getemail);
           localStorage.setItem("Id", result.getid);
           navigate("/dashboard");
-          window.location.reload();
+          // window.location.reload();
         } else {
           localStorage.setItem("swapIcons", true);
           localStorage.setItem("email", result.getemail);
           localStorage.setItem("Id", result.getid);
           navigate("/");
-          window.location.reload();
+          // window.location.reload();
         }
       }
       console.warn(result);

@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import "./nav.css";
 import "../navbar1.css";
-import Logo from "../logo2.jpg";
 import mainlogo from "../logo3.png";
 
 import {
@@ -10,6 +9,8 @@ import {
   Route,
   Link,
   Outlet,
+  useNavigate,
+  useLocation,
 } from "react-router-dom";
 import Home from "./Home";
 import Blog1 from "./Blog1";
@@ -22,9 +23,9 @@ import Your_Appoint from "./Your_Appoint";
 import Main from "../Doctor/Main";
 // import axios from "axios";
 function Navbar() {
-  
+  const location=useLocation()
   const [isopen, setisopen] = useState(false);
-  
+  const navigate=useNavigate()
   const toggle = () => {
     setisopen(!isopen);
   };
@@ -45,7 +46,8 @@ function Navbar() {
       else if(result.message){
         console.log(result.message);
         localStorage.clear();
-        window.location.reload();
+        navigate("/");
+        // window.location.reload();
       }
     } catch (error) {
       console.error("Error logging in:", error);
@@ -54,7 +56,7 @@ function Navbar() {
   
   return (
     <div>
-      <Router>
+      {/* <Router> */}
         {localStorage.getItem("is_doctor") ? (
           (
             <Main />
@@ -76,6 +78,8 @@ function Navbar() {
                   Home
                 </Link>
               </li>
+              {location.pathname==='/'?(
+                <>
               <li>
                 <a href="#about" className="remove text-white">
                   About
@@ -85,7 +89,7 @@ function Navbar() {
                 <a href="#contact" className="remove text-white">
                   Contact us
                 </a>
-              </li>
+              </li></>):('')}
               <li>
                 {!localStorage.getItem("swapIcons") ? (
                   <Link to="/appointment" className="remove text-white">
@@ -135,7 +139,7 @@ function Navbar() {
               </li>
               <li>
                 {localStorage.getItem("swapIcons") ? (
-                  <div  onClick={toggle}>
+                  <div onClick={toggle}>
                     <i className="fa-regular fa-user userIcon"></i>
                   </div>
                 ) : (
@@ -182,7 +186,7 @@ function Navbar() {
             <Route path="signup" element={<Signup />} />
           </Route>
         </Routes>
-        </Router>
+        {/* </Router> */}
     </div>
 
   );

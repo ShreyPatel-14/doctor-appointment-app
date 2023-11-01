@@ -6,7 +6,7 @@ from django.contrib.auth.models import AbstractBaseUser,BaseUserManager,Permissi
 # Create your models here.
  
 class Doctor(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=40)
     email = models.EmailField()
     gender = models.CharField(max_length=10)
@@ -14,11 +14,11 @@ class Doctor(models.Model):
     specialisation = models.CharField(max_length=50)    
     
     def __str__(self):
-        return self.name +" " + self.specialisation
+        return self.name + " " + self.specialisation
     
 class Appointment(models.Model):
-    user=models.ForeignKey(User,on_delete=models.CASCADE)
-    doctor= models.ForeignKey(Doctor,on_delete=models.CASCADE)
+    user=models.ForeignKey(User,on_delete=models.CASCADE,default=None)
+    doctor= models.ForeignKey(Doctor,on_delete=models.CASCADE,default=None)
     firstname = models.CharField(max_length=40)
     lastname = models.CharField(max_length=40)
     gender = models.CharField(max_length=10)
@@ -34,7 +34,7 @@ class Appointment(models.Model):
     time_slot=models.CharField(max_length=20)
 
     def __str__(self):
-        return self.firstname +" " + self.lastname
+        return self.firstname + " " + self.lastname
     
 class Profile(models.Model):
     user=models.ForeignKey(User,on_delete=models.CASCADE)

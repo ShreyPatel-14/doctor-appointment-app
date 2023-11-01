@@ -11,9 +11,8 @@ urlpatterns = [
     path('specialisation/',views.Specialisation,name='specialisation'),
     path('appointment/',views.Appointments,name='appointment'),
     path('yourappoints/',views.YourAppoints,name='yourappointment'),
+    # path('delete/<str:pk>/',views.deleteUser,name="deleteUser"),
     path('cancelappoint/',views.cancelAppoint,name='cancelappoint'),
     path('updatemodal/',views.updateModal,name='updatemodal'),
     path('updateappoint/',views.updateAppoint,name='updateappoint'),
-    # path('delete/<str:pk>/',views.deleteUser,name="deleteUser"),
 ]
-

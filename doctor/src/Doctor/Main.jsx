@@ -39,7 +39,6 @@ function Main() {
         }
     ]
     const logOut = async () => {
-
         try {
           let result = await fetch("http://localhost:8000/api/users/logout/", {
             method: "post",
@@ -56,7 +55,7 @@ function Main() {
             console.log(result.message);
             localStorage.clear()
             navigate("/")
-            window.location.reload()
+            // window.location.reload()
           }
         } catch (error) {
           console.error("Error logging in:", error);
@@ -76,13 +75,13 @@ function Main() {
                         {
                             list.map((item, index) => {
                                 return (
-                                    <Link to={item.path} key={index} className='link mb-2 py-2 px-3 mx-2' activeclassName='active' >
+                                    <Link to={item.path} key={index} className='link mb-2 py-2 px-3' activeclassName='active' >
                                         <div className="icon">{item.icon}</div>
                                         <div className="link_text" style={{ display: isOpen * isMobile ? "block" : "none" }}>{item.name}</div>
                                     </Link>)
                             })
                         }
-                        <Link to="/" key="3" className='link logout py-2 px-3 mx-2' activeclassName='active' onClick={logOut}>
+                        <Link to="/" key="3" className='link logout py-2 px-3' activeclassName='active' onClick={logOut}>
                             <div className="icon"><i class="fa-solid fa-arrow-right-from-bracket"></i></div>
                             <div className="link_text" style={{ display: isOpen * isMobile ? "block" : "none" }}>Logout</div>
                         </Link>
@@ -92,8 +91,7 @@ function Main() {
                             <Route path="/dashboard" element={<Dashboard />}></Route>
                             <Route path="/appointment_1" element={<Appointment />}></Route>
                             <Route path="/patients" element={<Patients />}></Route>
-                            <Route path="/" element={<Dashboard />}></Route>
-                
+                            <Route path="/" element={<Dashboard/>}></Route>
                         </Routes>
                     </div>
                 </div>

@@ -14,44 +14,6 @@ function Appointment() {
   const itemsPerPage = 7; // Number of items per page
   const pageCount = Math.ceil(totalItems / itemsPerPage);// Calculate the total number of pages
 
-  // useEffect(() => {
-  //   const fetchdata_initial = async () => {
-  //     try {
-  //       let response = await fetch("http://localhost:8000/api/doctors/appoints_data/", {
-  //         method: "post",
-  //         body: JSON.stringify({ date: format(date, "yyyy-MM-dd"), doctor_mail:localStorage.getItem("email")  }),
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //       });
-  //       if (response.message) {
-  //         response = await response.json();
-
-  //         const MAP1 = response.appoint.map((item, index) => {
-  //           return ({
-  //             Name: item.firstname + " " + item.lastname,
-  //             Schedule: item.time_slot,
-  //             VisitedBit: item.visited_bit,
-  //             id: item.id,
-  //             Index: index,
-  //             Status: item.status_bit,
-  //             Date: item.date
-  //           })
-  //         })
-  //         setMAP(MAP1);
-  //         settotalItems(MAP1.length);
-  //       }
-  //       else {
-  //         console.error("Error while fetching data");
-  //       }
-  //     }
-  //     catch (error) {
-  //       console.error("Error Logging In:", error);
-  //     }
-  //   }
-  //   fetchdata_initial();
-  // }, []);
-
   useEffect(() => {
     const fetchdata = async () => {
       try {
@@ -64,8 +26,6 @@ function Appointment() {
         });
         result=await result.json()
         if (result.message) {
-          
-          console.log(result.message)
           const MAP1 = result.appoint.map((item, index) => {
             return ({
               Name: item.firstname + " " + item.lastname,
@@ -148,7 +108,7 @@ function Appointment() {
     <>
       <div className='main2 p-4'>
         <div className='container-1'>
-          <h2 className='animate__animated animate__slideInDown text-theme'>Appointments</h2>
+          <h2 className='animate_animated animate_slideInDown text-theme'>Appointments</h2>
         </div>
         <div className='d-md-flex container-2 pt-5'>
           <div className=''>
@@ -232,5 +192,3 @@ function Appointment() {
 }
 
 export default Appointment
-
-

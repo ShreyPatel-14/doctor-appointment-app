@@ -315,7 +315,7 @@ function Home() {
               <i class="fa-solid fa-envelope fa-2xl"></i>
             </div>
             <h5 className="content3">EMAIL US</h5>
-            <p className="content3">care&cure247@gmail.com</p>
+            <p className="content3">healixpvtltd@gmail.com</p>
           </div>
           <div className="col-sm-6 col-md-3 mt-2">
             <div className="content3 mb-4">

@@ -3,6 +3,7 @@ import "./Your_Appoint.scss";
 import Calendar from "react-calendar";
 import { format } from "date-fns";
 import ReactPaginate from "react-paginate";
+import { useNavigate } from "react-router-dom";
 function Your_Appoint() {
   const [totalItems, settotalItems] = useState(0);
   const [data, setData] = useState([]);
@@ -10,6 +11,7 @@ function Your_Appoint() {
   const [id, setId] = useState("");
   const [docName, setDocName] = useState("");
   const [slots, setSlots] = useState([]);
+  const navigate=useNavigate();
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const pageCount = Math.ceil(totalItems / itemsPerPage);

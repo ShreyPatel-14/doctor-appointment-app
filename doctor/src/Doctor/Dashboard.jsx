@@ -77,7 +77,7 @@ function Dashboard() {
   const rejectAppoint = async (appoint_id) => {
     console.log(appoint_id.toString());
     try {
-      let result = await fetch("http://localhost:5000/rejectappoint", {
+      let result = await fetch("http://localhost:8000/api/doctors/rejectappoint/", {
         method: "post",
         body: JSON.stringify({
           _id: appoint_id,
@@ -131,7 +131,7 @@ function Dashboard() {
     <>
       <div className='main3 p-4'>
         <div className='mb-4'>
-          <h2 className='animate_animated animate_slideInDown text-theme'>Dashboard</h2>
+          <h2 className='animate__animated animate__slideInDown text-theme'>Dashboard</h2>
         </div>
         {/* <div> */}
         <div className='d-lg-flex justify-content-around patients_number mb-3'>
@@ -179,7 +179,7 @@ function Dashboard() {
                       return (
                         <tr >
                           <th>{item.Sr}</th>
-                          <td >{item.Date.toString().slice(0, 8) + (((parseInt(item.Date.toString()[8] + item.Date.toString()[9]) + 1).toString().length) === 1 ? "0" : "") + (parseInt(item.Date.toString()[8] + item.Date.toString()[9]) + 1)}</td>
+                          <td >{item.Date}</td>
                           <td >{item.Time}</td>
                           <td >{item.Name}</td>
                           <td >{item.Contact}</td>

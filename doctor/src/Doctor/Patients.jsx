@@ -67,7 +67,7 @@ function Patients() {
     <>
       <div className='main5 d-flex-column p-4'>
         <div>
-          <h2 className='animate_animated animate_slideInDown text-theme'>Patients</h2>
+          <h2 className='animate__animated animate__slideInDown text-theme'>Patients</h2>
         </div>
         <div className='column_patients justify-content-center mt-4 '>
           <div className='d-flex justify-content-between mb-2 mx-2'>
@@ -149,3 +149,4 @@ function Patients() {
 }
 
 export default Patients
+
